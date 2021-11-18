@@ -1,26 +1,3 @@
-# NAME = minishell
-
-# SRC = $(wildcard *.c)
-
-# CFLAGS = -Wall -Wextra -Werror
-
-# CC = gcc
-
-# OBJ = $(SRC:.c=.o)
-
-# all : $(NAME)
-
-# $(NAME) : $(OBJ)
-# 	$(CC) $(OBJ) libreadline.a -lreadline -lncurses -o $(NAME) $(CFLAGS)
-
-# clean :
-# 	rm -rf $(OBJ)
-
-# fclean : clean
-# 	rm -rf $(NAME)
-
-# re : fclean all
-
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -28,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/10/12 13:33:44 by hadufer           #+#    #+#              #
-#    Updated: 2021/11/16 10:37:30 by hadufer          ###   ########.fr        #
+#    Created: 2021/11/18 15:32:53 by hadufer           #+#    #+#              #
+#    Updated: 2021/11/18 15:32:54 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +15,12 @@ CC = cc
 RM = rm -f
 CFLAGS = -Wall -Werror -Wextra
 
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard *.c) $(wildcard ./lexer/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -I. -c $< -o $@
 
 all: $(NAME)
 
