@@ -6,7 +6,7 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 15:32:53 by hadufer           #+#    #+#              #
-#    Updated: 2021/11/18 15:32:54 by hadufer          ###   ########.fr        #
+#    Updated: 2021/11/18 15:45:50 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@ CC = cc
 RM = rm -f
 CFLAGS = -Wall -Werror -Wextra
 
-SRCS = $(wildcard *.c) $(wildcard ./lexer/*.c)
+SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -I. -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -I./includes -c $< -o $@
 
 all: $(NAME)
 
