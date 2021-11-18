@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:58:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/17 15:22:31 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/18 09:51:13 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -39,18 +39,22 @@ void	find_exec(char *str)
 	int	i;
 
 	i = -1;
-	if (fork() != 0)
-	{
-		wait(NULL);
-		return ;
-	}
+
 	arg = ft_split(str, ' ');
 	cpy = get_command(str);
 	path = ft_split(getenv("PATH") , ':');
 	while (path[++i])
 	{
 		temp = ft_strjoin(ft_strjoin(path[i], "/"), cpy);
-		execve(temp, arg, NULL);
+		if (access(temp, F_OK) != -1)
+		{
+			if (fork() != 0)
+			{
+				wait(NULL);
+				return ;
+			}
+			execve(temp, arg, NULL);
+		}
 		free(temp);
 	}
 }

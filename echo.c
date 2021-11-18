@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/17 15:22:50 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/17 20:01:19 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -41,7 +41,7 @@ int	echo(char *str)
 		i++;
 	if (check_n(str + i) == 0)
 	{
-		printf("ici %s\n", str + i);
+		printf("%s\n", str + i);
 		return (1);
 	}
 	while (str[i] == ' ')

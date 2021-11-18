@@ -6,9 +6,9 @@ SRC = main.c \
 	  cd.c \
 	  pwd.c \
 	  find_exec.c \
-	  utils.c
+	  utils.c \
 
-FLAGS = -Wall -Wextra -Werror -lreadline
+CFLAGS = -Wall -Wextra -Werror
 
 CC = gcc
 
@@ -17,7 +17,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(OBJ) $(FLAGS) -o $(NAME)
+	$(CC) $(OBJ) libreadline.a -lreadline -lncurses -o $(NAME) $(CFLAGS)
 
 clean :
 	rm -rf $(OBJ)

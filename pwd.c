@@ -6,12 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:31:31 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/17 15:04:16 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/18 08:46:03 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	pwd(char *str, char **env)
+int	pwd(char *str)
 {
 	int	i;
 	char	*pwd;
