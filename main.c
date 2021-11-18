@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 09:51:14 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:18:54 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <signal.h>
 
 void	*handler_function(int sig)
 {
 	if (sig == SIGINT)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		printf("\nminishell$ ");
 	}
@@ -47,7 +52,7 @@ void	all_buildins(char *str, char **env)
 void	prompt(char *str, char **env)
 {
 	while (str != NULL)
-	{	
+	{
 		signal(SIGQUIT, (void *)handler_function);
 		signal(SIGINT, (void *)handler_function);
 		str = readline("minishell$ ");
@@ -61,7 +66,7 @@ void	prompt(char *str, char **env)
 int	main(int argc, char **argv, char **env)
 {
 	char	*str;
-	
+
 	(void)argc;
 	(void)argv;
 	str = "oui";

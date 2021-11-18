@@ -1,28 +1,66 @@
+# NAME = minishell
+
+# SRC = $(wildcard *.c)
+
+# CFLAGS = -Wall -Wextra -Werror
+
+# CC = gcc
+
+# OBJ = $(SRC:.c=.o)
+
+# all : $(NAME)
+
+# $(NAME) : $(OBJ)
+# 	$(CC) $(OBJ) libreadline.a -lreadline -lncurses -o $(NAME) $(CFLAGS)
+
+# clean :
+# 	rm -rf $(OBJ)
+
+# fclean : clean
+# 	rm -rf $(NAME)
+
+# re : fclean all
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/10/12 13:33:44 by hadufer           #+#    #+#              #
+#    Updated: 2021/11/16 10:37:30 by hadufer          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
+CC = cc
+RM = rm -f
+CFLAGS = -Wall -Werror -Wextra
 
-SRC = main.c \
-	  ft_split.c \
-	  echo.c \
-	  cd.c \
-	  pwd.c \
-	  find_exec.c \
-	  utils.c \
+SRCS = $(wildcard *.c)
 
-CFLAGS = -Wall -Wextra -Werror
+OBJS = $(SRCS:.c=.o)
 
-CC = gcc
+%.o: %.c
+	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -c $< -o $@
 
-OBJ = $(SRC:.c=.o)
+all: $(NAME)
 
-all : $(NAME)
+$(NAME): $(OBJS) ./Libftprintf/libftprintf.a
+	$(CC) $(CFLAGS) -lreadline -lncurses $(OBJS) ./libftprintf/libftprintf.a -o $(NAME)
 
-$(NAME) : $(OBJ)
-	$(CC) $(OBJ) libreadline.a -lreadline -lncurses -o $(NAME) $(CFLAGS)
+./Libftprintf/libftprintf.a:
+	$(MAKE) -C ./Libftprintf
 
-clean :
-	rm -rf $(OBJ)
+clean:
+	$(MAKE) -C ./Libftprintf $@
+	$(RM) $(OBJS)
 
-fclean : clean
-	rm -rf $(NAME)
+fclean: clean
+	$(MAKE) -C ./Libftprintf $@
+	$(RM) $(NAME)
 
-re : fclean all
+re: fclean all
+
+.PHONY: all clean flcean re
