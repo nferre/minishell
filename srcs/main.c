@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 10:32:11 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/19 13:39:41 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -27,7 +27,7 @@ void	*handler_function(int sig)
 	if (sig == SIGQUIT)
 	{
 		rl_redisplay();
-		printf("minishell$   \b\b");
+		printf("minishell$ ");
 	}
 	return (NULL);
 }
@@ -67,6 +67,12 @@ void	all_buildins(char *str, char **env)
 
 void	prompt(char *str, char **env)
 {
+	struct termios *term;
+
+	term = malloc(sizeof(struct termios));
+	tcgetattr(0, term);
+	term->c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW,term);
 	while (str != NULL)
 	{
 		signal(SIGQUIT, (void *)handler_function);

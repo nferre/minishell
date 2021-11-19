@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:53 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 10:15:01 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/19 13:06:16 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
 
 void	rl_replace_line(const char *str, int i);
 char	*ft_strdup(const char *str);
