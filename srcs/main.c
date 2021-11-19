@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 09:39:50 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/19 10:32:11 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -38,7 +38,6 @@ void	all_buildins(char *str, char **env)
 	char	*to_print;
 
 	i = 0;
-	(void)env;
 	if (str == NULL)
 		return ;
 	if (str[0] == '\0')
@@ -53,6 +52,7 @@ void	all_buildins(char *str, char **env)
 	to_print = echo(str, &i);
 	i += cd(str);
 	i += pwd(str);
+	i += show_env(str, env);
 	exit_all(str);
 	if (i != 0)
 		return ;
@@ -62,7 +62,7 @@ void	all_buildins(char *str, char **env)
 			return ;
 		i++;
 	}
-	find_exec(str);
+	find_exec(str, env);
 }
 
 void	prompt(char *str, char **env)

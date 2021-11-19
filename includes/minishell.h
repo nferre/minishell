@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:53 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 17:55:06 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/19 10:15:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		pwd(char *s);
 void	prompt(char *str, char **env);
 void	*handler_function(int sig);
 char	**ft_split(char const *s, char c);
-void	find_exec(char *str);
+void	find_exec(char *str, char **env);
 void	exit_all(char *str);
+int		show_env(char *str, char **env);
 #endif
