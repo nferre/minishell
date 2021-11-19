@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 15:55:08 by nferre           ###   ########.fr       */
+/*   Created: 2021/11/18 15:55:15 by nferre            #+#    #+#             */
+/*   Updated: 2021/11/18 16:34:04 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	cd(char *str)
+void	exit_all(char *str)
 {
+	char *end;
 	int	i;
-	char *cd;
 
-	cd = "cd";
 	i = -1;
-	while (++i != 2)
-		if (cd[0] != str[0])
-			return (0);
-	chdir(str + i + 1);
-	return (1);
+	end = "exit";
+	while (i++ != 4)
+		if (str[i] != end[i])
+			return ;
+	printf("exit\n");
+	exit(0);
 }

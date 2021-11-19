@@ -6,7 +6,7 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 15:32:53 by hadufer           #+#    #+#              #
-#    Updated: 2021/11/18 15:45:50 by hadufer          ###   ########.fr        #
+#    Updated: 2021/11/19 08:44:05 by nferre           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) ./Libftprintf/libftprintf.a
-	$(CC) $(CFLAGS) -lreadline -lncurses $(OBJS) ./libftprintf/libftprintf.a -o $(NAME)
+	$(CC) $(CFLAGS) -lreadline -lncurses $(OBJS) libreadline.a ./libftprintf/libftprintf.a -o $(NAME)
 
 ./Libftprintf/libftprintf.a:
 	$(MAKE) -C ./Libftprintf

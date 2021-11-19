@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 15:18:54 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/11/19 09:39:50 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
@@ -21,7 +20,7 @@ void	*handler_function(int sig)
 	if (sig == SIGINT)
 	{
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		printf("\nminishell$ ");
 	}
@@ -36,16 +35,33 @@ void	*handler_function(int sig)
 void	all_buildins(char *str, char **env)
 {
 	int	i;
+	char	*to_print;
 
 	i = 0;
 	(void)env;
 	if (str == NULL)
 		return ;
-	i += echo(str);
+	if (str[0] == '\0')
+		return ;
+	while (str[i])
+	{
+		if (str[i] < 27 || str[i] > 127)
+			return ;
+		i++;
+	}
+	i = 0;
+	to_print = echo(str, &i);
 	i += cd(str);
 	i += pwd(str);
+	exit_all(str);
 	if (i != 0)
 		return ;
+	while (str[i] == ' ')
+	{
+		if (str[i] == ' ' && str[i + 1] == '\0')
+			return ;
+		i++;
+	}
 	find_exec(str);
 }
 
@@ -59,7 +75,7 @@ void	prompt(char *str, char **env)
 		all_buildins(str, env);
 		add_history(str);
 	}
-	printf("exit\n");
+	printf("\b\bexit\n");
 	exit(0);
 }
 
@@ -69,7 +85,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	str = "oui";
+	str = "\0";
 	prompt(str, env);
 	return (0);
 }
