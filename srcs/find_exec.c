@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:58:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 13:00:18 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/22 09:55:27 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -37,7 +37,6 @@ void	find_exec(char *str, char **env)
 	int	i;
 
 	i = -1;
-
 	arg = ft_split(str, ' ');
 	cpy = get_command(str);
 	path = ft_split(getenv("PATH") , ':');
@@ -64,5 +63,4 @@ void	find_exec(char *str, char **env)
 		}
 		execve(str, arg, env);
 	}
-	exit (0);
 }

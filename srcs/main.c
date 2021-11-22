@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 13:39:41 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/22 09:55:29 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -81,7 +81,7 @@ void	prompt(char *str, char **env)
 		all_buildins(str, env);
 		add_history(str);
 	}
-	printf("\b\bexit\n");
+	printf("exit\n");
 	exit(0);
 }
 
