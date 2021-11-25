@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 15:55:08 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 11:53:16 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -19,7 +19,7 @@ int	cd(char *str)
 	cd = "cd";
 	i = -1;
 	while (++i != 2)
-		if (cd[0] != str[0])
+		if (cd[i] != str[i])
 			return (0);
 	chdir(str + i + 1);
 	return (1);
