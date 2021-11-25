@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:58:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/25 11:42:41 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 12:02:06 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -21,7 +21,7 @@ char	*get_command(char *str)
 	while (str[i] == ' ')
 		i++;
 	j = i;
-	while (str[j] != ' ')
+	while (str[j] != ' ' && str[j] != '\0')
 		j++;
 	str[j] = '\0';
 	temp = ft_strdup(str + i);

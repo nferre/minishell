@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:31:31 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 12:56:24 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 12:00:48 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -18,7 +18,7 @@ int	pwd(char *str)
 	char	cwd[255];
 
 	pwd = "pwd";
-	i = -1;
+	i = 0;
 	while (str[i] == ' ')
 		i++;
 	while (++i != 3)
