@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 16:10:39 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/11/18 17:55:04 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 int	check_n(char *str)
@@ -26,11 +25,12 @@ int	check_n(char *str)
 	return (-1);
 }
 
-int	echo(char *str)
+char	*echo(char *str, int *j)
 {
 	char	*echo;
 	int		i;
 	int		ver;
+	char	*to_print;
 
 	i = -1;
 	ver = 0;
@@ -42,8 +42,10 @@ int	echo(char *str)
 		i++;
 	if (check_n(str + i) == 0)
 	{
-		printf("%s\n", str + i);
-		return (1);
+		to_print = ft_strdup(str + i);
+		printf("%s\n", to_print);
+		*j += 1;
+		return (to_print);
 	}
 	while (str[i] == ' ')
 		i++;
@@ -54,5 +56,7 @@ int	echo(char *str)
 	while (str[i] == ' ')
 		i++;
 	printf("%s", str + i);
-	return (1);
+	to_print = ft_strdup(str + i);
+	*j += 1;
+	return (to_print);
 }

@@ -1,15 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 15:29:27 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/22 09:54:46 by nferre           ###   ########.fr       */
+/*   Created: 2021/11/18 15:55:15 by nferre            #+#    #+#             */
+/*   Updated: 2021/11/18 16:34:04 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
+void	exit_all(char *str)
+{
+	char *end;
+	int	i;
 
+	i = -1;
+	end = "exit";
+	while (i++ != 4)
+		if (str[i] != end[i])
+			return ;
+	printf("exit\n");
+	exit(0);
+}
