@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 15:36:26 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/18 15:37:57 by hadufer          ###   ########.fr       */
+/*   Created: 2021/11/18 17:33:30 by hadufer           #+#    #+#             */
+/*   Updated: 2021/11/18 17:36:53 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "libft.h"
+#include "token.h"
 
-typedef struct s_lexer
+t_token	*init_token(int type, char *value)
 {
-	char			c;
-	unsigned int	i;
-	char			*contents;
-}				t_lexer;
+	t_token	*token;
 
-t_lexer	*init_lexer(char *contents);
-void	lexer_advance(t_lexer *lexer);
-void	lexer_skip_whitespace(t_lexer *lexer);
-#endif
+	token = ft_calloc(1, sizeof(t_token));
+	token->e_type = type;
+	token->value = value;
+	return (token);
+}
