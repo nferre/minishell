@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 09:47:55 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/25 09:50:29 by hadufer          ###   ########.fr       */
+/*   Created: 2021/11/25 12:36:36 by hadufer           #+#    #+#             */
+/*   Updated: 2021/11/25 12:41:15 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_strndup(char *str, int n)
 {
-	int	i;
+	int		i;
+	char	*ret;
 
 	i = 0;
-	while (((s1 && s1[i]) && (s2 && s2[i]))  && (s1[i] == s2[i]))
+	ret = ft_calloc(sizeof(char), n + 1);
+	while (str[i] && i < n)
+	{
+		ret[i] = str[i];
 		i++;
-	return (i);
+	}
+	return (ret);
 }

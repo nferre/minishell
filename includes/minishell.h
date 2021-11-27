@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:53 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/19 13:06:16 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 12:39:50 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,7 @@ char	**ft_split(char const *s, char c);
 void	find_exec(char *str, char **env);
 void	exit_all(char *str);
 int		show_env(char *str, char **env);
+// UTILS
+int		ft_isspace(int c);
+char	*ft_strndup(char *str, int n);
 #endif

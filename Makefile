@@ -6,20 +6,21 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 15:32:53 by hadufer           #+#    #+#              #
-#    Updated: 2021/11/22 09:54:14 by nferre           ###   ########.fr        #
+#    Updated: 2021/11/25 12:29:31 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -fsanitize=address
 
 SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
+	echo $(DEBUG_COMPILE)
 	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -I./includes -c $< -o $@
 
 all: $(NAME)

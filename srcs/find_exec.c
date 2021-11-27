@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   find_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:58:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/22 09:55:27 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 11:49:32 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_command(char *str)

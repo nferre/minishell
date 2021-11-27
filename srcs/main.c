@@ -3,13 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/22 09:55:29 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/25 16:07:35 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+#include "lexer.h"
+#include "libft.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -92,6 +95,12 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	str = "\0";
-	prompt(str, env);
+	// prompt(str, env);
+	t_lexer *test = init_lexer(" <<");
+	while (test->c)
+	{
+		printf("%s\n", lexer_get_next_token(test)->value);
+	}
+
 	return (0);
 }
