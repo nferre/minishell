@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   realloc_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/25 11:53:16 by nferre           ###   ########.fr       */
+/*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
+/*   Updated: 2021/11/27 13:13:38 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	cd(char *str)
+char	**add_elem_env(char **env, char *data, char *data_name)
 {
-	int	i;
-	char *cd;
-
-	cd = "cd";
-	i = -1;
-	while (++i != 2)
-		if (cd[i] != str[i])
-			return (0);
-	chdir(str + i + 1);
-	return (1);
+	(void)env;
+	(void)data;
+	(void)data_name;
+	return (NULL);
 }

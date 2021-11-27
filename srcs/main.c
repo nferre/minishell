@@ -6,7 +6,11 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/25 16:07:35 by hadufer          ###   ########.fr       */
+=======
+/*   Updated: 2021/11/27 13:35:22 by nferre           ###   ########.fr       */
+>>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +57,11 @@ void	all_buildins(char *str, char **env)
 	}
 	i = 0;
 	to_print = echo(str, &i);
+	free(to_print);
 	i += cd(str);
 	i += pwd(str);
 	i += show_env(str, env);
+	i += export_var(str, env);
 	exit_all(str);
 	if (i != 0)
 		return ;
@@ -78,6 +84,7 @@ void	prompt(char *str, char **env)
 	tcsetattr(0, TCSANOW,term);
 	while (str != NULL)
 	{
+		free(str);
 		signal(SIGQUIT, (void *)handler_function);
 		signal(SIGINT, (void *)handler_function);
 		str = readline("minishell$ ");
@@ -94,6 +101,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+<<<<<<< HEAD
 	str = "\0";
 	// prompt(str, env);
 	t_lexer *test = init_lexer(" <<");
@@ -102,5 +110,9 @@ int	main(int argc, char **argv, char **env)
 		printf("%s\n", lexer_get_next_token(test)->value);
 	}
 
+=======
+	str = malloc(sizeof(char));
+	prompt(str, env);
+>>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
 	return (0);
 }

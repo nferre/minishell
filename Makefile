@@ -6,7 +6,11 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 15:32:53 by hadufer           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2021/11/25 12:29:31 by hadufer          ###   ########.fr        #
+=======
+#    Updated: 2021/11/27 13:12:49 by nferre           ###   ########.fr        #
+>>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +19,8 @@ CC = cc
 RM = rm -f
 CFLAGS = -g -fsanitize=address
 
-SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c)
+SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c) $(wildcard ./srcs/builtins/export/*.c)
+
 
 OBJS = $(SRCS:.c=.o)
 
