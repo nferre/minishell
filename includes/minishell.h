@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 13:03:53 by nferre            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/25 12:39:50 by hadufer          ###   ########.fr       */
-=======
-/*   Updated: 2021/11/27 13:10:23 by nferre           ###   ########.fr       */
->>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
+/*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
+/*   Updated: 2021/11/27 18:13:58 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +37,9 @@ char	**ft_split(char const *s, char c);
 void	find_exec(char *str, char **env);
 void	exit_all(char *str);
 int		show_env(char *str, char **env);
-<<<<<<< HEAD
 // UTILS
 int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);
-=======
-int		ft_isspace(int c);
->>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
+size_t	ft_strlen_null(char *s);
+char	*ft_strjoin_null(char *s1, char *s2);
 #endif

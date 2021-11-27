@@ -6,13 +6,10 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/25 16:07:35 by hadufer          ###   ########.fr       */
-=======
-/*   Updated: 2021/11/27 13:35:22 by nferre           ###   ########.fr       */
->>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
+/*   Updated: 2021/11/27 18:52:09 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include "lexer.h"
@@ -101,18 +98,19 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-<<<<<<< HEAD
 	str = "\0";
-	// prompt(str, env);
-	t_lexer *test = init_lexer(" <<");
-	while (test->c)
-	{
-		printf("%s\n", lexer_get_next_token(test)->value);
-	}
 
-=======
-	str = malloc(sizeof(char));
-	prompt(str, env);
->>>>>>> 223775915585397fd14033d5ad9bccad0a8612b4
-	return (0);
+	// str = malloc(sizeof(char));
+	// prompt(str, env);
+	// while (1)
+	// {
+		str = readline("minishell$ ");
+		t_lexer *test = init_lexer(str);
+		while (test->c)
+		{
+			t_token	*tmp = lexer_get_next_token(test);
+			printf("%d = %s\n", tmp->e_type, tmp->value);
+		}
+	// }
+	// return (0);
 }
