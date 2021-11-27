@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/25 11:53:51 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/27 13:35:22 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -50,9 +50,11 @@ void	all_buildins(char *str, char **env)
 	}
 	i = 0;
 	to_print = echo(str, &i);
+	free(to_print);
 	i += cd(str);
 	i += pwd(str);
 	i += show_env(str, env);
+	i += export_var(str, env);
 	exit_all(str);
 	if (i != 0)
 		return ;
@@ -75,6 +77,7 @@ void	prompt(char *str, char **env)
 	tcsetattr(0, TCSANOW,term);
 	while (str != NULL)
 	{
+		free(str);
 		signal(SIGQUIT, (void *)handler_function);
 		signal(SIGINT, (void *)handler_function);
 		str = readline("minishell$ ");
@@ -91,7 +94,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	str = "\0";
+	str = malloc(sizeof(char));
 	prompt(str, env);
 	return (0);
 }

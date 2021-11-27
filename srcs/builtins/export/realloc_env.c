@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   realloc_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 16:51:41 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/27 09:44:16 by nferre           ###   ########.fr       */
+/*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
+/*   Updated: 2021/11/27 13:13:38 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-int	ft_isspace(int c)
+#include "minishell.h"
+
+char	**add_elem_env(char **env, char *data, char *data_name)
 {
-	if ((c == 0x20 || c == 0x09) || (c == 0x0a || c == 0x0b)
-		|| (c == 0x0c || c == 0x0d))
-		return (1);
-	return (0);
+	(void)env;
+	(void)data;
+	(void)data_name;
+	return (NULL);
 }
