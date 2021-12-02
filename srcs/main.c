@@ -6,11 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/27 18:52:09 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/02 10:36:08 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 #include "minishell.h"
 #include "lexer.h"
 #include "libft.h"
@@ -36,44 +34,80 @@ void	*handler_function(int sig)
 	return (NULL);
 }
 
-void	all_buildins(char *str, char **env)
+void	all_builtins(t_token **tab, char **env, char *str)
 {
 	int	i;
+	t_token	**new;
 	char	*to_print;
+	int ver;
+	int	check;
 
+	check = 0;
+	ver = 0;
 	i = 0;
-	if (str == NULL)
+	if (tab[0]->value[0] == '\0')
 		return ;
-	if (str[0] == '\0')
-		return ;
-	while (str[i])
+	i = 0;
+	if (check_redirect(tab) != 0)
 	{
-		if (str[i] < 27 || str[i] > 127)
-			return ;
-		i++;
+		new = malloc(sizeof(t_token *));
+		free(new);
+		new = get_new_tab(tab, &ver, &check);
 	}
-	i = 0;
-	to_print = echo(str, &i);
+	else
+		new = tab;
+	to_print = echo(new, &i);
+	to_print = show_env(new, env, &i, to_print);
+	i += cd(new);
+	to_print = pwd(new, &i, to_print);
+	i += export_var(new, env);
+	exit_all(new);
+	if (check_redirect(tab) != 0)
+		redirect_output(to_print, tab, &ver);
+	else if (to_print != NULL)
+		printf("%s", to_print);
 	free(to_print);
-	i += cd(str);
-	i += pwd(str);
-	i += show_env(str, env);
-	i += export_var(str, env);
-	exit_all(str);
+	free(new);
 	if (i != 0)
 		return ;
-	while (str[i] == ' ')
+	find_exec(str, env);
+}
+
+t_token		**get_tab(char *str)
+{
+	t_token	*token;
+	t_lexer	*lexer;
+	t_token	**tab;
+	int	size_tab;
+	int	i;
+
+	i = 0;
+	size_tab = 1;
+	lexer = init_lexer(str);
+	while (lexer->c)
 	{
-		if (str[i] == ' ' && str[i + 1] == '\0')
-			return ;
+		size_tab++;
+		token = lexer_get_next_token(lexer);
+		free(token);
+	}
+	free(lexer);
+	tab = malloc(sizeof(t_token *) * size_tab);
+	lexer = init_lexer(str);
+	while (lexer->c)
+	{
+		token = lexer_get_next_token(lexer);
+		tab[i] = token;
 		i++;
 	}
-	find_exec(str, env);
+	free(lexer);
+	tab[i] = NULL;
+	return (tab);
 }
 
 void	prompt(char *str, char **env)
 {
 	struct termios *term;
+	t_token	**tab;
 
 	term = malloc(sizeof(struct termios));
 	tcgetattr(0, term);
@@ -85,8 +119,11 @@ void	prompt(char *str, char **env)
 		signal(SIGQUIT, (void *)handler_function);
 		signal(SIGINT, (void *)handler_function);
 		str = readline("minishell$ ");
-		all_buildins(str, env);
+		if (str == NULL)
+			break ;
 		add_history(str);
+		tab = get_tab(str);
+		all_builtins(tab, env, str);
 	}
 	printf("exit\n");
 	exit(0);
@@ -99,18 +136,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	str = "\0";
-
-	// str = malloc(sizeof(char));
-	// prompt(str, env);
-	// while (1)
-	// {
-		str = readline("minishell$ ");
-		t_lexer *test = init_lexer(str);
-		while (test->c)
-		{
-			t_token	*tmp = lexer_get_next_token(test);
-			printf("%d = %s\n", tmp->e_type, tmp->value);
-		}
-	// }
-	// return (0);
+	str = malloc(sizeof(char));
+	prompt(str, env);
+	return (0);
 }

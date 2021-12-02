@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:13:39 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/27 13:35:20 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/29 15:00:46 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -27,7 +27,7 @@ char	*nb_to_malloc(char *str, int i, char c)
 
 }
 
-char	*get_name(char *str)
+char	*get_name(t_token **tab)
 {
 	char	*data_name;
 	int	i;
@@ -35,20 +35,14 @@ char	*get_name(char *str)
 
 	j = 0;
 	i = 0;
-	while (ft_isspace(str[i]) == 1)
-		i++;
-	while (ft_isspace(str[i]) == 0)
-		i++;
-	while (ft_isspace(str[i]) == 1)
-		i++;
-	data_name = nb_to_malloc(str, i, '=');
-	while (ft_isspace(str[i]) == 0 && str[i] != '=')
-		data_name[j++] = str[i++];
+	data_name = nb_to_malloc(tab[1]->value, i, '=');
+	while (tab[1]->value[i] != '=')
+		data_name[j++] = tab[1]->value[i++];
 	data_name[j] = '\0';
 	return (data_name);
 }
 
-char	*get_var(char *str)
+char	*get_var(t_token **tab)
 {
 	int	i;
 	int	j;
@@ -56,25 +50,27 @@ char	*get_var(char *str)
 
 	j = 0;
 	i = 0;
-	while (str[i] != '=')
+	while (tab[1]->value[i] != '=')
 		i++;
 	i++;
-	data = nb_to_malloc(str, i, 0);
-	while (str[i] && ft_isspace(str[i]) == 0)
-		data[j++] = str[i++];
+	data = nb_to_malloc(tab[1]->value, i, 0);
+	while (tab[1]->value[i])
+		data[j++] = tab[1]->value[i++];
 	data[j] = '\0';
 	return (data);
 }
 
-int	export_var(char *str, char **env)
+int	export_var(t_token **tab, char **env)
 {
 	char	*data_name;
 	char	*data;
 
-	if (verify(str) == 1)
+	if (verify(tab) == 1)
 		return (0);
-	data_name = get_name(str);
-	data = get_var(str);
-	(void)env;
+	data_name = get_name(tab);
+	data = get_var(tab);
+	env = add_elem_env(env, data, data_name);
+	free(data);
+	free(data_name);
 	return (1);
 }

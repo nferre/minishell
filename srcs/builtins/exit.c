@@ -6,12 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:55:15 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/18 16:34:04 by nferre           ###   ########.fr       */
+/*   Updated: 2021/11/29 10:34:25 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	exit_all(char *str)
+void	exit_all(t_token **tab)
 {
 	char *end;
 	int	i;
@@ -19,7 +19,7 @@ void	exit_all(char *str)
 	i = -1;
 	end = "exit";
 	while (i++ != 4)
-		if (str[i] != end[i])
+		if (tab[0]->value[i] != end[i])
 			return ;
 	printf("exit\n");
 	exit(0);

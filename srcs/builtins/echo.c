@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/27 13:31:50 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/01 13:49:21 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -15,17 +15,17 @@ int	check_n(char *str)
 {
 	int	i;
 
-	if (str[0] != '-' && str[1] != 'n')
+	if (str[0] != '-' || str[1] != 'n')
 		return (0);
 	i = 1;
 	while (str[i] == 'n')
 		++i;
-	if (str[i] != ' ')
+	if (str[i] != '\0')
 		return (0);
 	return (-1);
 }
 
-char	*echo(char *str, int *j)
+char	*echo(t_token **tab, int *j)
 {
 	char	*echo;
 	int		i;
@@ -36,27 +36,15 @@ char	*echo(char *str, int *j)
 	ver = 0;
 	echo = "echo";
 	while (++i != 4)
-		if (str[i] != echo[i])
+		if (tab[0]->value[i] != echo[i])
 			return (0);
-	while (str[i] == ' ')
-		i++;
-	if (check_n(str + i) == 0)
+	if (check_n(tab[1]->value) == 0)
 	{
-		to_print = ft_strdup(str + i);
-		printf("%s\n", to_print);
+		to_print = ft_strjoin(ft_strdup(tab[1]->value), "\n");
 		*j += 1;
 		return (to_print);
 	}
-	while (str[i] == ' ')
-		i++;
-	while (str[i] == '-')
-		i++;
-	while (str[i] == 'n')
-		i++;
-	while (str[i] == ' ')
-		i++;
-	printf("%s", str + i);
-	to_print = ft_strdup(str + i);
+	to_print = ft_strdup(tab[2]->value);
 	*j += 1;
 	return (to_print);
 }

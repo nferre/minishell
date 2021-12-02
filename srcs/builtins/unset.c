@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/29 10:36:16 by nferre           ###   ########.fr       */
+/*   Created: 2021/11/29 15:03:26 by nferre            #+#    #+#             */
+/*   Updated: 2021/11/29 15:05:41 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	cd(t_token **tab)
+int	unset(char *str, char **env)
 {
 	int	i;
-	char *cd;
+	int	j;
+	int	k;
+	char	*unset;
 
-	cd = "cd";
+	unset = "unset";
 	i = -1;
-	while (++i != 2)
-		if (cd[i] != tab[0]->value[i])
+	j = -1;
+	k = 0;
+	while (++i != 5)
+		if (str[i] != unset[i])
 			return (0);
-	chdir(tab[1]->value);
+	i++;
+	while (str[i])
+	{
+		i++;
+		k++;
+	}
+	while (env[++j])
+	{
+		if (ft_strncmp(env[j], str + i - k, k) == 0)
+		{
+			free(env[j]);
+			env[j] = NULL;
+		}
+	}
 	return (1);
 }
