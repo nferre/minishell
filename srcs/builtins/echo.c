@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/01 13:49:21 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/02 12:34:16 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -44,7 +44,10 @@ char	*echo(t_token **tab, int *j)
 		*j += 1;
 		return (to_print);
 	}
-	to_print = ft_strdup(tab[2]->value);
+	if (tab[2])
+		to_print = ft_strdup(tab[2]->value);
+	else
+		to_print[0] = '\0';
 	*j += 1;
 	return (to_print);
 }

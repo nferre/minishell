@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/01 12:59:54 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/06 13:54:51 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,75 @@ void	free_all(char **arg, char **path, char *cpy)
 	free(cpy);
 }
 
-void	find_exec(char *str, char **env)
+char	**get_arg(t_token **tab)
+{
+	int		i;
+	char	**arg;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (tab[i]->e_type != 0)
+			break ;
+		i++;
+	}
+	arg = malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while(tab[++i])
+	{
+		if (tab[i]->e_type != 0)
+			break ;
+		arg[i] = ft_strdup(tab[i]->value);
+	}
+	arg[i] = NULL;
+	return (arg);
+}
+
+void new_file(t_token **tab, char *temp, char **env, char **arg)
+{
+	int	check;
+	int	ver;
+	int	file;
+	char	*last_name;
+	t_token **new;
+	int	i;
+
+	i = 0;
+	check = 0;
+	ver = 0;
+	new = get_new_tab(tab, &ver, &check);
+	while (check != 1)
+	{
+		if (i == 0)
+			last_name = ft_strdup(new[0]->value);
+		else
+		{
+			file = open(last_name, O_WRONLY | O_TRUNC);
+			close(file);
+		}
+		free(new);
+		new = get_new_tab(tab, &ver, &check);
+		file = open(new[0]->value, O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
+		close(1);
+		dup2(file, 1);
+		if (check != 1)
+		{
+			if (fork() != 0)
+			{
+				wait(NULL);
+				free(last_name);
+				last_name = ft_strdup(new[0]->value);
+				i++;
+				close(file);
+				continue ;
+			}
+		}
+		free(last_name);
+		execve(temp, arg, env);
+	}
+}
+
+void	find_exec(t_token **new, char **env, t_token **tab)
 {
 	char	**path;
 	char	**arg;
@@ -52,10 +120,11 @@ void	find_exec(char *str, char **env)
 	char	*temp2;
 	char	*cpy;
 	int	i;
+	int	file;
 
 	i = -1;
-	arg = ft_split(str, ' ');
-	cpy = get_command(str);
+	arg = get_arg(new);
+	cpy = new[0]->value;
 	path = ft_split(getenv("PATH") , ':');
 	while (path[++i])
 	{
@@ -71,12 +140,15 @@ void	find_exec(char *str, char **env)
 				free_all(arg, path, cpy);
 				return ;
 			}
-			execve(temp, arg, env);
+			if (check_redirect(tab) == 0)
+				execve(temp, arg, env);
+			else
+				new_file(tab, temp, env, arg);
 		}
 		free(temp);
 		free(temp2);
 	}
-	if (access(str, X_OK) != -1)
+	if (access(new[0]->value, X_OK) != -1)
 	{
 		if(fork() != 0)
 		{
@@ -84,8 +156,8 @@ void	find_exec(char *str, char **env)
 			free_all(arg, path, cpy);
 			return ;
 		}
-		execve(str, arg, env);
+		execve(new[0]->value, arg, env);
 	}
-	printf("minishell: %s: command not found\n", str);
+	printf("minishell: %s: command not found\n", new[0]->value);
 	free_all(arg, path, cpy);
 }

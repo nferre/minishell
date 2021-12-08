@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/02 10:36:08 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 13:38:00 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -34,6 +34,25 @@ void	*handler_function(int sig)
 	return (NULL);
 }
 
+void	rm(char **env, t_token **new)
+{
+	char **arg;
+
+	if (access(".HlPusER9jae3ffz5sDJu!=05", X_OK) != -1)
+	{
+
+		new[0]->value = ft_strdup(".HlPusER9jae3ffz5sDJu!=05");
+		arg = get_arg(new);
+		if (fork() != 0)
+		{
+			//need a free
+			wait(NULL);
+			return ;
+		}
+		execve("/bin/rm", arg, env);
+	}
+}
+
 void	all_builtins(t_token **tab, char **env, char *str)
 {
 	int	i;
@@ -45,8 +64,6 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	check = 0;
 	ver = 0;
 	i = 0;
-	if (tab[0]->value[0] == '\0')
-		return ;
 	i = 0;
 	if (check_redirect(tab) != 0)
 	{
@@ -62,18 +79,44 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	to_print = pwd(new, &i, to_print);
 	i += export_var(new, env);
 	exit_all(new);
-	if (check_redirect(tab) != 0)
+	if (check_redirect(tab) != 0 && i > 0)
 		redirect_output(to_print, tab, &ver);
 	else if (to_print != NULL)
 		printf("%s", to_print);
 	free(to_print);
-	free(new);
 	if (i != 0)
 		return ;
-	find_exec(str, env);
+	find_exec(new, env, tab);
+	rm(env, new);
+	free(new);
 }
 
-t_token		**get_tab(char *str)
+char	*heredoc(char *str_stop)
+{
+	char 	*temp;
+	char	*final_str;
+	int	fd;
+
+	fd = open(".HlPusER9jae3ffz5sDJu!=05", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
+	final_str = malloc(sizeof(char));
+	final_str[0] = '\0';
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	printf("\n");
+	while (ft_strncmp(temp, str_stop, ft_strlen(str_stop)))
+	{
+		if (!temp)
+			free(temp);
+		temp = readline("> ");
+		ft_putendl_fd(temp, fd);
+	}
+	close(fd);
+	free(str_stop);
+	return (".HlPusER9jae3ffz5sDJu!=05");
+}
+
+t_token		**get_tab(char *str, char **env)
 {
 	t_token	*token;
 	t_lexer	*lexer;
@@ -86,9 +129,11 @@ t_token		**get_tab(char *str)
 	lexer = init_lexer(str);
 	while (lexer->c)
 	{
-		size_tab++;
 		token = lexer_get_next_token(lexer);
+		if (token->e_type == 2)
+			continue ;
 		free(token);
+		size_tab++;
 	}
 	free(lexer);
 	tab = malloc(sizeof(t_token *) * size_tab);
@@ -96,6 +141,15 @@ t_token		**get_tab(char *str)
 	while (lexer->c)
 	{
 		token = lexer_get_next_token(lexer);
+		if (token->e_type == 2)
+			continue ;
+		else if (token->e_type == 3)
+		{	
+			token = lexer_get_next_token(lexer);
+			token->value = heredoc(token->value);
+		}
+		else if (token->value[0] == '$')
+			token->value = get_local_var(env, token->value + 1);
 		tab[i] = token;
 		i++;
 	}
@@ -107,6 +161,7 @@ t_token		**get_tab(char *str)
 void	prompt(char *str, char **env)
 {
 	struct termios *term;
+	char	*str_joined;
 	t_token	**tab;
 
 	term = malloc(sizeof(struct termios));
@@ -121,8 +176,10 @@ void	prompt(char *str, char **env)
 		str = readline("minishell$ ");
 		if (str == NULL)
 			break ;
+		else if (str[0] == '\0')
+			continue ;
 		add_history(str);
-		tab = get_tab(str);
+		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
 	}
 	printf("exit\n");

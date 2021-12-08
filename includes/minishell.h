@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/02 10:44:03 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 13:35:33 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <limits.h>
 # include <fcntl.h>
 
+char	**get_arg(t_token **tab);
+char	*get_local_var(char **env, char *str);
 void	redirect_output(char *str, t_token **tab, int *ver);
 int		check_redirect(t_token **tab);
 void	create_file(char *str, char *name, int check);
@@ -44,10 +46,11 @@ char	*pwd(t_token **tab, int *i, char *to_print);
 void	prompt(char *str, char **env);
 void	*handler_function(int sig);
 char	**ft_split(char const *s, char c);
-void	find_exec(char *str, char **env);
+void	find_exec(t_token **new, char **env, t_token **tab);
 void	exit_all(t_token **tab);
 char	*show_env(t_token **tab, char **env, int *j, char *to_print);
 // UTILS
+char	*ft_strjoin_free(char *s1, char const *s2);
 int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);
 size_t	ft_strlen_null(char *s);

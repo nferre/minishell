@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 10:05:52 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/02 10:43:56 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/06 10:53:55 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -97,12 +97,17 @@ void	redirect_output(char *str, t_token **tab, int *ver)
 {
 	t_token	**new;
 	int	check;
+	int	i;
 
+	i = 0;
 	check = 0;
 	while (check != 1)
 	{
+		if (i != 0)
+			free(new);
 		new = get_new_tab(tab, ver, &check);
 		create_file(str, new[0]->value, check_redirect(tab));
+		i++;
 	}
 }
 
