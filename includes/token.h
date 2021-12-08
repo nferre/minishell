@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:49:09 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/07 11:31:44 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 15:37:29 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ typedef struct s_token
 }			t_token;
 
 t_token	*init_token(int type, char *value);
+t_token	*destroy_token(t_token *token);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:36:26 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/28 10:02:48 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 17:27:18 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ t_token	*lexer_collect_double_quote_string(t_lexer *lexer);
 t_token	*lexer_collect_arg(t_lexer *lexer);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token);
+t_token	*lexer_collect_var(t_lexer *lexer);
 #endif

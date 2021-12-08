@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/08 13:35:33 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 18:26:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);
 size_t	ft_strlen_null(char *s);
 char	*ft_strjoin_null(char *s1, char *s2);
+char    *ft_remchar(char *str, int i);
 #endif

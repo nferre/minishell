@@ -6,16 +6,19 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/08 13:38:00 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/08 18:32:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
 #include "lexer.h"
 #include "libft.h"
+#include "token.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
+#include <fcntl.h>
 
 void	*handler_function(int sig)
 {
@@ -132,7 +135,7 @@ t_token		**get_tab(char *str, char **env)
 		token = lexer_get_next_token(lexer);
 		if (token->e_type == 2)
 			continue ;
-		free(token);
+		destroy_token(token);
 		size_tab++;
 	}
 	free(lexer);
@@ -173,7 +176,7 @@ void	prompt(char *str, char **env)
 		free(str);
 		signal(SIGQUIT, (void *)handler_function);
 		signal(SIGINT, (void *)handler_function);
-		str = readline("minishell$ ");
+		str = readline("minishell$> ");
 		if (str == NULL)
 			break ;
 		else if (str[0] == '\0')
@@ -192,8 +195,15 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	str = "\0";
-	str = malloc(sizeof(char));
-	prompt(str, env);
+	// str = "\0";
+	// str = malloc(sizeof(char));
+	// prompt(str, env);
+	// t_lexer *test = init_lexer("\'\"test\"\' $test");
+	// t_token *t = lexer_get_next_token(test);
+	// while (t)
+	// {
+	// 	printf("%d : %s\n", t->e_type, t->value);
+	// 	t = lexer_get_next_token(test);
+	// }
 	return (0);
 }
