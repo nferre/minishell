@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 17:33:30 by hadufer           #+#    #+#             */
-/*   Updated: 2021/11/18 17:36:53 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:30:52 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,10 @@ t_token	*init_token(int type, char *value)
 	token->e_type = type;
 	token->value = value;
 	return (token);
+}
+
+t_token	*destroy_token(t_token *token)
+{
+	free(token->value);
+	free(token);
 }
