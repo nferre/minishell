@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:49:09 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/08 15:37:29 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/08 18:37:30 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ typedef struct s_token
 }			t_token;
 
 t_token	*init_token(int type, char *value);
-t_token	*destroy_token(t_token *token);
+void	destroy_token(t_token *token);
+t_token	*expand_token(t_token *token);
 #endif

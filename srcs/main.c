@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/08 18:32:05 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/08 18:58:01 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,15 +195,17 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// str = "\0";
-	// str = malloc(sizeof(char));
-	// prompt(str, env);
+	str = "\0";
+	str = malloc(sizeof(char));
+	prompt(str, env);
 	// t_lexer *test = init_lexer("\'\"test\"\' $test");
 	// t_token *t = lexer_get_next_token(test);
+	// t = expand_token(t);
 	// while (t)
 	// {
 	// 	printf("%d : %s\n", t->e_type, t->value);
 	// 	t = lexer_get_next_token(test);
+	// 	t = expand_token(t);
 	// }
 	return (0);
 }

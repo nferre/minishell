@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:29:27 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/08 17:31:11 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/08 18:37:10 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,4 @@ char	*lexer_get_current_char_as_string(t_lexer *lexer)
 	str[0] = lexer->c;
 	str[1] = 0;
 	return (str);
-
 }
