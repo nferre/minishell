@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/08 18:58:01 by hadufer          ###   ########.fr       */
+/*   Updated: 2021/12/22 10:26:36 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_token		**get_tab(char *str, char **env)
 		if (token->e_type == 2)
 			continue ;
 		else if (token->e_type == 3)
-		{	
+		{
 			token = lexer_get_next_token(lexer);
 			token->value = heredoc(token->value);
 		}

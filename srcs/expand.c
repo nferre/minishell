@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:12:58 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/06 12:55:08 by nferre           ###   ########.fr       */
+/*   Updated: 2021/12/22 10:26:19 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+#include "token.h"
 
 char	*get_local_var(char **env, char *str)
 {
