@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 11:27:10 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/05 22:41:02 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -25,6 +25,25 @@ int	check_n(char *str)
 	return (-1);
 }
 
+char	*get_str_to_print(t_token **tab, int i)
+{
+	char	*final_str;
+	char	*temp;
+
+	final_str = ft_strdup(tab[i]->value);
+	i++;
+	while (tab[i])
+	{
+		if (tab[i]->e_type != 0)
+			break ;
+		temp = ft_strjoin(" ", tab[i]->value);
+		final_str = ft_strjoin_free(final_str, temp);
+		free(temp);
+		i++;
+	}
+	return (final_str);
+}
+
 char	*echo(t_token **tab, int *j)
 {
 	char	*echo;
@@ -33,7 +52,6 @@ char	*echo(t_token **tab, int *j)
 	char	*to_print;
 	char	*temp;
 
-	//need to read all the line and not just the first word after echo
 	i = -1;
 	ver = 0;
 	echo = "echo";
@@ -48,7 +66,7 @@ char	*echo(t_token **tab, int *j)
 	}
 	if (check_n(tab[1]->value) == 0)
 	{
-		temp = ft_strdup(tab[1]->value);
+		temp = get_str_to_print(tab, 1);
 		to_print = ft_strjoin(temp, "\n");
 		free(temp);
 		*j += 1;

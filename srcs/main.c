@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 18:19:46 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/05 22:43:04 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,24 @@ void	rm(char **env, t_token **new)
 	}
 }
 
+void	free_tab(t_token **tab)
+{
+	int	i;
+
+	i = -1;
+	if (tab == NULL)
+		return ;
+	while (tab[++i])
+	{
+		if (!(tab[i]))
+			break  ;
+		free(tab[i]->value);
+		if (tab[i])
+			free(tab[i]);
+	}
+	free(tab);
+}
+
 void	all_builtins(t_token **tab, char **env, char *str)
 {
 	int	i;
@@ -102,6 +120,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	}
 	find_exec(new, env, tab);
 	rm(env, new);
+	free_tab(new);
 }
 
 char	*heredoc(char *str_stop)
@@ -169,23 +188,6 @@ t_token		**get_tab(char *str, char **env)
 	free(lexer);
 	tab[i] = NULL;
 	return (tab);
-}
-
-void	free_tab(t_token **tab)
-{
-	int	i;
-
-	i = -1;
-	if (tab == NULL)
-		return ;
-	while (tab[++i])
-	{
-		if (!(tab[i]))
-			break  ;
-		if (tab[i])
-			free(tab[i]);
-	}
-	free(tab);
 }
 
 void	prompt(char *str, char **env)
