@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
+#    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:55:02 by hadufer           #+#    #+#              #
-#    Updated: 2021/12/08 18:18:04 by hadufer          ###   ########.fr        #
+#    Updated: 2022/01/05 13:40:49 by nferre           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
-CFLAGS = -g -fsanitize=address
+CFLAGS =
 
 SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer_parser/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c) $(wildcard ./srcs/builtins/export/*.c)
 
@@ -26,7 +26,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) ./Libftprintf/libftprintf.a
-	$(CC) $(CFLAGS) -lreadline -lncurses $(OBJS) libreadline.a ./libftprintf/libftprintf.a -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -lreadline -lncurses libreadline.a ./libftprintf/libftprintf.a -o $(NAME)
 
 ./Libftprintf/libftprintf.a:
 	$(MAKE) -C ./Libftprintf

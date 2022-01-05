@@ -6,10 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:13:39 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/02 15:12:39 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:54:24 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
+//need to fix when realloc existing var
 
 char	*nb_to_malloc(char *str, int i, char c)
 {
