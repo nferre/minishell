@@ -6,12 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 18:08:21 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:09:21 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "token.h"
+#include "lexer.h"
 #include "minishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
