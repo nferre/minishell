@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 17:36:00 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 17:51:12 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:16:46 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_token	*expand_token(t_token *token)
 
 	i = 0;
 	j = 0;
-	if ((token && token->value) && ((token->e_type == TOKEN_DOUBLE_QUOTE_STRING) || (token->e_type == TOKEN_ARG)))
+	if ((token && token->value) && ((token->e_type == TOKEN_DOUBLE_QUOTE_STRING) || (token->e_type == TOKEN_ARG) || (token->e_type == TOKEN_ENV_VAR)))
 	{
 		while ((token->value && token->value[i]))
 		{
