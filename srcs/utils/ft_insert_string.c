@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_remchar.c                                       :+:      :+:    :+:   */
+/*   ft_insert_string.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 18:21:35 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 15:24:35 by hadufer          ###   ########.fr       */
+/*   Created: 2022/01/05 14:12:14 by hadufer           #+#    #+#             */
+/*   Updated: 2022/01/05 17:28:47 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-// ft_remchar delete the character at the index i
-// and send back a string without it
-// if an error occur return NULL
-char	*ft_remchar(char *str, int i)
+// Insert needle string into at the index k of haystack and return the result
+char	*ft_insert_string(char *haystack, char *needle, int k)
 {
-	char	*str_1;
-	char	*str_2;
+	int		i;
+	char	*tmp;
+	char	*tmp_begin;
+	char	*tmp_end;
 	char	*ret;
 
-	if (i > ft_strlen_null(str))
+	i = 0;
+	ret = NULL;
+	if (!haystack || !needle)
 		return (NULL);
-	else if (i == ft_strlen_null(str))
-		return (ft_strndup(str, ft_strlen_null(str) - 1));
-	str_1 = ft_strndup(str, i);
-	str_2 = ft_strndup(str + i + 1, ft_strlen_null(str));
-	ret = ft_strjoin_null(str_1, str_2);
-	free(str_1);
-	free(str_2);
+	while (haystack[i] && (i < k))
+		i++;
+	tmp_begin = ft_strndup(haystack, i);
+	tmp_end = ft_strndup(haystack + i, ft_strlen(haystack) - i);
+	tmp = ft_strjoin_null(tmp_begin, needle);
+	ret = ft_strjoin_null(tmp, tmp_end);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2021/12/08 18:26:05 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:57:22 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 # include <termios.h>
 # include <limits.h>
 # include <fcntl.h>
+
+typedef struct	s_data
+{
+	char	**env;
+}				t_data;
+
+t_data	g_data;
 
 char	**get_arg(t_token **tab);
 char	*get_local_var(char **env, char *str);
@@ -55,5 +62,8 @@ int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);
 size_t	ft_strlen_null(char *s);
 char	*ft_strjoin_null(char *s1, char *s2);
-char    *ft_remchar(char *str, int i);
+char	*ft_remchar(char *str, int i);
+char	*ft_remstring(char *str, int i, int j);
+char	*ft_insert_string(char *haystack, char *needle, int k);
+void	init_global_data(char **env);
 #endif
