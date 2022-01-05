@@ -6,13 +6,14 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2021/11/29 10:36:16 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:43:48 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
 int	cd(t_token **tab)
 {
+	//cd need to go to ~/ when the input is 'cd'
 	int	i;
 	char *cd;
 

@@ -6,14 +6,14 @@
 #    By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:55:02 by hadufer           #+#    #+#              #
-#    Updated: 2021/12/22 10:26:05 by hadufer          ###   ########.fr        #
+#    Updated: 2022/01/05 13:40:49 by nferre           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
-CFLAGS = -g -fsanitize=address
+CFLAGS =
 
 SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer_parser/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c) $(wildcard ./srcs/builtins/export/*.c)
 

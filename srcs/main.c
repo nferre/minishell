@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/22 10:26:36 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/05 14:19:36 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "lexer.h"
 #include "libft.h"
 #include "token.h"
@@ -37,6 +36,16 @@ void	*handler_function(int sig)
 	return (NULL);
 }
 
+void	free_arg(char **arg)
+{
+	int	i;
+
+	i = -1;
+	while (arg[++i])
+		free(arg[i]);
+	free(arg);
+}
+
 void	rm(char **env, t_token **new)
 {
 	char **arg;
@@ -48,7 +57,8 @@ void	rm(char **env, t_token **new)
 		arg = get_arg(new);
 		if (fork() != 0)
 		{
-			//need a free
+			free(new[0]->value);
+			free_arg(arg);
 			wait(NULL);
 			return ;
 		}
@@ -70,8 +80,6 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	i = 0;
 	if (check_redirect(tab) != 0)
 	{
-		new = malloc(sizeof(t_token *));
-		free(new);
 		new = get_new_tab(tab, &ver, &check);
 	}
 	else
@@ -88,32 +96,32 @@ void	all_builtins(t_token **tab, char **env, char *str)
 		printf("%s", to_print);
 	free(to_print);
 	if (i != 0)
+	{
 		return ;
+	}
 	find_exec(new, env, tab);
 	rm(env, new);
-	free(new);
 }
 
 char	*heredoc(char *str_stop)
 {
 	char 	*temp;
-	char	*final_str;
 	int	fd;
 
 	fd = open(".HlPusER9jae3ffz5sDJu!=05", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
-	final_str = malloc(sizeof(char));
-	final_str[0] = '\0';
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 	printf("\n");
+	temp = malloc(sizeof(char));
+	temp[0] = '\0';
 	while (ft_strncmp(temp, str_stop, ft_strlen(str_stop)))
 	{
-		if (!temp)
-			free(temp);
+		free(temp);
 		temp = readline("> ");
 		ft_putendl_fd(temp, fd);
 	}
+	free(temp);
 	close(fd);
 	free(str_stop);
 	return (".HlPusER9jae3ffz5sDJu!=05");
@@ -148,6 +156,7 @@ t_token		**get_tab(char *str, char **env)
 			continue ;
 		else if (token->e_type == 3)
 		{
+			destroy_token(token);
 			token = lexer_get_next_token(lexer);
 			token->value = heredoc(token->value);
 		}
@@ -159,6 +168,23 @@ t_token		**get_tab(char *str, char **env)
 	free(lexer);
 	tab[i] = NULL;
 	return (tab);
+}
+
+void	free_tab(t_token **tab)
+{
+	int	i;
+
+	i = -1;
+	if (tab == NULL)
+		return ;
+	while (tab[++i])
+	{
+		if (!(tab[i]))
+			break  ;
+		if (tab[i])
+			free(tab[i]);
+	}
+	free(tab);
 }
 
 void	prompt(char *str, char **env)
@@ -184,7 +210,9 @@ void	prompt(char *str, char **env)
 		add_history(str);
 		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
+		free_tab(tab);
 	}
+	free(str);
 	printf("exit\n");
 	exit(0);
 }
