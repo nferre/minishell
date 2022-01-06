@@ -6,12 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 16:13:37 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/06 19:14:12 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "lexer.h"
+#include "libft.h"
 #include "minishell.h"
 #include <stdio.h>
 #include <readline/readline.h>
@@ -222,7 +223,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer("echo $?");
+	// t_lexer *test = init_lexer(ft_strdup("\\\"echo\\\" \\|"));
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)
