@@ -6,10 +6,10 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 13:35:45 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 16:10:56 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
 #include "token.h"
 #include "lexer.h"
 #include "minishell.h"
@@ -165,16 +165,16 @@ t_token		**get_tab(char *str, char **env)
 	while (lexer->c)
 	{
 		token = lexer_get_next_token(lexer);
+		token = expand_token(token);
 		if (token->e_type == 2)
 			continue ;
 		else if (token->e_type == 3)
 		{
 			destroy_token(token);
 			token = lexer_get_next_token(lexer);
+			token = expand_token(token);
 			token->value = heredoc(token->value);
 		}
-		else if (token->value[0] == '$')
-			token->value = get_local_var(env, token->value + 1);
 		tab[i] = token;
 		i++;
 	}
@@ -223,7 +223,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer("echo $a");
+	// t_lexer *test = init_lexer("echo $?");
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)

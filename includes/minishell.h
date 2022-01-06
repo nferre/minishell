@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 13:21:17 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:16:19 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct	s_data
 {
 	char	**env;
+	int		last_exit_status;
 }				t_data;
 
 t_data	g_data;

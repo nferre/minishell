@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 11:46:39 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:23:10 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 	char	*temp;
 	char	*temp2;
 	char	*cpy;
+	int		wstatus;
 	int	i;
 	int	file;
 
@@ -133,7 +134,9 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 		{
 			if (fork() != 0)
 			{
-				wait(NULL);
+				wait(&wstatus);
+				if (WIFEXITED(wstatus))
+					g_data.last_exit_status = WEXITSTATUS(wstatus);
 				free(temp);
 				free(temp2);
 				free_all(arg, path);
