@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   realloc_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 14:28:06 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 16:21:29 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+#include "libft.h"
 
 char	**dup_env(char **env, char *data, char *data_name)
 {
@@ -32,7 +34,7 @@ char	**del_elem_env(char **env, char *data_name)
 	int		line;
 
 	line = get_line_local_var(env, data_name);
-	free(env[line]);	
+	free(env[line]);
 }
 
 char	**add_elem_env(char **env, char *data, char *data_name)

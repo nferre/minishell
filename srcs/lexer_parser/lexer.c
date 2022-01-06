@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:29:27 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 18:19:19 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:42:36 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_lexer	*init_lexer(char *contents)
 	lexer->contents = contents;
 	lexer->i = 0;
 	lexer->c = contents[lexer->i];
-
+	lexer->escape_list = lexer_init_escape_list(&(lexer->contents));
 	return (lexer);
 }
 
@@ -57,17 +57,17 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 			lexer_advance(lexer);
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_REDIRECT_OUT_APPEND, ft_strdup(">>"))));
 		}
-		else if (lexer->c == '<')
+		else if (lexer->c == '<' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_REDIRECT_IN, lexer_get_current_char_as_string(lexer))));
-		else if (lexer->c == '>')
+		else if (lexer->c == '>' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_REDIRECT_OUT, lexer_get_current_char_as_string(lexer))));
-		else if (lexer->c == '|')
+		else if (lexer->c == '|' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_PIPE, lexer_get_current_char_as_string(lexer))));
-		else if (lexer->c == ';')
+		else if (lexer->c == ';' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_SEMICOLON, lexer_get_current_char_as_string(lexer))));
-		else if (lexer->c == '\'')
+		else if (lexer->c == '\'' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, lexer_collect_quote_string(lexer)));
-		else if (lexer->c == '\"')
+		else if (lexer->c == '\"' && !lexer->escape_list[lexer->i])
 			return (lexer_advance_with_token(lexer, lexer_collect_double_quote_string(lexer)));
 		// else if (lexer->c == '$')
 		// 	return (lexer_advance_with_token(lexer, lexer_collect_var(lexer)));
