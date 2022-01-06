@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:13:39 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 11:30:07 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:36:59 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -26,7 +26,6 @@ char	*nb_to_malloc(char *str, int i, char c)
 	}
 	malloc_me = malloc(sizeof(char) * (j + 1));
 	return (malloc_me);
-
 }
 
 char	*get_name(t_token **tab)
@@ -70,6 +69,8 @@ int	export_var(t_token **tab, char **env)
 	if (verify(tab) == 1)
 		return (0);
 	data_name = get_name(tab);
+	if (get_local_var(env, data_name))
+		del_elem_env(env, data_name);
 	data = get_var(tab);
 	env = add_elem_env(env, data, data_name);
 	free(data);

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 13:21:17 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:45:24 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	*handler_function(int sig);
 char	**ft_split(char const *s, char c);
 void	find_exec(t_token **new, char **env, t_token **tab);
 void	exit_all(t_token **tab);
+char	**del_elem_env(char **env, char *data_name);
 char	*show_env(t_token **tab, char **env, int *j, char *to_print);
+int		get_line_local_var(char **env, char *data_name);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);

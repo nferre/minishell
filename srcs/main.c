@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 13:35:45 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:45:20 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -206,7 +206,6 @@ void	prompt(char *str, char **env)
 		add_history(str);
 		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
-		free_tab(tab);
 	}
 	free(str);
 	printf("exit\n");
