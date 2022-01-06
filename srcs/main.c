@@ -6,7 +6,11 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/06 19:14:12 by hadufer          ###   ########.fr       */
+=======
+/*   Updated: 2022/01/06 17:45:14 by nferre           ###   ########.fr       */
+>>>>>>> 1efd88cb54fdea5fc32550a43ff7ef91c7dc1873
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +104,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	else
 		new = dup_double_token_array(tab);
 	to_print = echo(new, &i);
+	i += unset(new, env, &i);
 	to_print = show_env(new, env, &i, to_print);
 	i += cd(new);
 	to_print = pwd(new, &i, to_print);
@@ -207,6 +212,7 @@ void	prompt(char *str, char **env)
 		add_history(str);
 		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
+		free_tab(tab);
 	}
 	free(str);
 	printf("exit\n");
