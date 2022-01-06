@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 16:13:37 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:08:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	else
 		new = dup_double_token_array(tab);
 	to_print = echo(new, &i);
+	i += unset(new, env, &i);
 	to_print = show_env(new, env, &i, to_print);
 	i += cd(new);
 	to_print = pwd(new, &i, to_print);

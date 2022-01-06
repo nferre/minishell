@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:08:50 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 14:45:22 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 17:05:38 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -32,14 +32,19 @@ char	*show_env(t_token **tab, char **env, int *j, char *to_print)
 		if (i != 0)
 		{
 			temp2 = ft_strdup(str);
-			temp = ft_strjoin(temp2, "\n");
+			if (ft_strncmp(env[i], "7ca7486dfc94b", 13) != 0)
+				temp = ft_strjoin(temp2, "\n");
+			else
+				temp = ft_strdup(temp2);
 			free(temp2);
 		}
 		else
 			temp = ft_strdup(str);
 		free(str);
-		if (env[i] != NULL)
+		if (ft_strncmp(env[i], "7ca7486dfc94b", 13) != 0)
 			str = ft_strjoin(temp, env[i]);
+		else
+			str = ft_strdup(temp);
 		free(temp);
 	}
 	temp = ft_strjoin(str, "\n");
