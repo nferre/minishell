@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 14:19:39 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:46:39 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_command(char *str)
 	return (temp);
 }
 
-void	free_all(char **arg, char **path, char *cpy)
+void	free_all(char **arg, char **path)
 {
 	int	i;
 
@@ -41,7 +41,6 @@ void	free_all(char **arg, char **path, char *cpy)
 	while (path[++i])
 		free(path[i]);
 	free(path);
-	free(cpy);
 }
 
 char	**get_arg(t_token **tab)
@@ -137,7 +136,7 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 				wait(NULL);
 				free(temp);
 				free(temp2);
-				free_all(arg, path, cpy);
+				free_all(arg, path);
 				return ;
 			}
 			if (check_redirect(tab) == 0)
@@ -153,11 +152,11 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 		if(fork() != 0)
 		{
 			wait(NULL);
-			free_all(arg, path, cpy);
+			free_all(arg, path);
 			return ;
 		}
 		execve(new[0]->value, arg, env);
 	}
 	printf("minishell: %s: command not found\n", new[0]->value);
-	free_all(arg, path, cpy);
+	free_all(arg, path);
 }

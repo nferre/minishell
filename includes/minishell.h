@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 16:57:22 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/06 13:21:17 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	find_exec(t_token **new, char **env, t_token **tab);
 void	exit_all(t_token **tab);
 char	*show_env(t_token **tab, char **env, int *j, char *to_print);
 // UTILS
+t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
 int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);

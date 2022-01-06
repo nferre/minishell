@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 22:43:04 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 13:35:45 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 #include "token.h"
 #include "lexer.h"
@@ -51,10 +50,10 @@ void	rm(char **env, t_token **new)
 {
 	char **arg;
 
-	if (access(".HlPusER9jae3ffz5sDJu!=05", X_OK) != -1)
+	if (access(".HlPusER9jae3ffz5sDJu!=05~", X_OK) != -1)
 	{
 
-		new[0]->value = ft_strdup(".HlPusER9jae3ffz5sDJu!=05");
+		new[0]->value = ft_strdup(".HlPusER9jae3ffz5sDJu!=05~");
 		arg = get_arg(new);
 		if (fork() != 0)
 		{
@@ -76,8 +75,6 @@ void	free_tab(t_token **tab)
 		return ;
 	while (tab[++i])
 	{
-		if (!(tab[i]))
-			break  ;
 		free(tab[i]->value);
 		if (tab[i])
 			free(tab[i]);
@@ -98,11 +95,9 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	i = 0;
 	i = 0;
 	if (check_redirect(tab) != 0)
-	{
 		new = get_new_tab(tab, &ver, &check);
-	}
 	else
-		new = tab;
+		new = dup_double_token_array(tab);
 	to_print = echo(new, &i);
 	to_print = show_env(new, env, &i, to_print);
 	i += cd(new);
@@ -115,9 +110,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 		printf("%s", to_print);
 	free(to_print);
 	if (i != 0)
-	{
 		return ;
-	}
 	find_exec(new, env, tab);
 	rm(env, new);
 	free_tab(new);
@@ -128,7 +121,7 @@ char	*heredoc(char *str_stop)
 	char 	*temp;
 	int	fd;
 
-	fd = open(".HlPusER9jae3ffz5sDJu!=05", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
+	fd = open(".HlPusER9jae3ffz5sDJu!=05~", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -144,7 +137,7 @@ char	*heredoc(char *str_stop)
 	free(temp);
 	close(fd);
 	free(str_stop);
-	return (".HlPusER9jae3ffz5sDJu!=05");
+	return (".HlPusER9jae3ffz5sDJu!=05~");
 }
 
 t_token		**get_tab(char *str, char **env)
