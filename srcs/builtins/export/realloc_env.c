@@ -6,25 +6,10 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 17:00:58 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 17:29:05 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-
-char	**dup_env(char **env, char *data, char *data_name)
-{
-	int	i;
-	int	j;
-	char	*temp;
-
-	i = 0;
-	j = 0;
-	while (env[i])
-		i++;
-	temp = malloc((ft_strlen(data) + ft_strlen(data_name) + 2) * sizeof(char));
-	free(temp);
-	return (env);
-}
 
 void	del_elem_env(char **env, char *data_name)
 {
@@ -43,7 +28,6 @@ char	**add_elem_env(char **env, char *data, char *data_name)
 	char	*temp;
 
 	i = 0;
-	env = dup_env(env, data, data_name);
 	while (env[i])
 		i++;
 	temp = ft_strjoin(data_name, "=");
