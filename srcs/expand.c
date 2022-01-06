@@ -6,16 +6,14 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:12:58 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 13:32:06 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:20:17 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 #include "token.h"
 
 char	*get_local_var(char **env, char *str)
 {
-	char	*final_str;
 	int	i;
 	int	j;
 	int	ver;
@@ -37,7 +35,31 @@ char	*get_local_var(char **env, char *str)
 		if (ver == 1)
 			return (env[i] + j + 1);
 	}
-	final_str = malloc(sizeof(char));
-	final_str[0] = '\0';
-	return (final_str);
+	return (NULL);
+}
+
+int	get_line_local_var(char **env, char *str)
+{
+	int	i;
+	int	j;
+	int	ver;
+
+	i = -1;
+	while (env[++i])
+	{
+		j = 0;
+		ver = 1;
+		while (env[i][j] && str[j])
+		{
+			if (env[i][j] != str[j])
+			{
+				ver = 0;
+				break ;
+			}
+			j++;
+		}
+		if (ver == 1)
+			return (i);
+	}
+	return (-1);
 }

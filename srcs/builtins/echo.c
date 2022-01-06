@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 22:41:02 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:45:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -51,7 +51,7 @@ char	*echo(t_token **tab, int *j)
 	int		ver;
 	char	*to_print;
 	char	*temp;
-
+	//fix when -n
 	i = -1;
 	ver = 0;
 	echo = "echo";
@@ -61,7 +61,7 @@ char	*echo(t_token **tab, int *j)
 	if (tab[1] == NULL)
 	{
 		to_print = malloc(sizeof(char));
-		to_print[0] = '\n';
+		to_print[0] = '\0';
 		return (to_print);
 	}
 	if (check_n(tab[1]->value) == 0)
