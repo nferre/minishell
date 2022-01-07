@@ -6,11 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/06 19:14:12 by hadufer          ###   ########.fr       */
-=======
-/*   Updated: 2022/01/06 17:45:14 by nferre           ###   ########.fr       */
->>>>>>> 1efd88cb54fdea5fc32550a43ff7ef91c7dc1873
+/*   Updated: 2022/01/07 13:09:50 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,15 +224,15 @@ int	main(int argc, char **argv, char **env)
 	init_global_data(env);
 	str = "\0";
 	str = malloc(sizeof(char));
-	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("\\\"echo\\\" \\|"));
-	// t_token *t = lexer_get_next_token(test);
-	// t = expand_token(t);
-	// while (t)
-	// {
-	// 	printf("%d : %s\n", t->e_type, t->value);
-	// 	t = lexer_get_next_token(test);
-	// 	t = expand_token(t);
-	// }
+	// prompt(str, env);
+	t_lexer *test = init_lexer(ft_strdup("\\\"echo\\\" \\|"));
+	t_token *t = lexer_get_next_token(test);
+	t = expand_token(t);
+	while (t)
+	{
+		printf("%d : %s\n", t->e_type, t->value);
+		t = lexer_get_next_token(test);
+		t = expand_token(t);
+	}
 	return (0);
 }
