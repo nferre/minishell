@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:08:03 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 19:09:51 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 13:09:10 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,21 @@ int	*lexer_init_escape_list(char **contents)
 	char	*tmp_contents;
 	int		begin_contents_size;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	begin_contents_size = ft_strlen_null(*contents);
 	list = malloc(sizeof(int) * begin_contents_size);
 	while (*contents && (i < ft_strlen_null(*contents)))
 	{
-		if (((i > 0) && i < ft_strlen_null(*contents)) && ((*contents)[i - j - 1] == '\\'))
+		if (((i > 0) && i < ft_strlen_null(*contents)) && ((*contents)[i - 1] == '\\'))
 		{
-			list[i - j] = 1;
-			tmp_contents = ft_remchar(*contents, i - j - 1);
+			list[i - 1] = 1;
+			tmp_contents = ft_remchar(*contents, i - 1);
 			free(*contents);
 			*contents = tmp_contents;
-			j++;
 		}
 		else
-			list[i - j] = 0;
+			list[i] = 0;
 		i++;
 	}
 	while (i < begin_contents_size)
