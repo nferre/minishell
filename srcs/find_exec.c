@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 12:57:35 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/07 13:18:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*get_command(char *str)
 {
+	//je sais pas a quoi ca sert lol
 	char	*temp;
 	int	i;
 	int	j;
@@ -31,6 +32,7 @@ char	*get_command(char *str)
 
 void	free_all(char **arg, char **path)
 {
+	//free arg et path rien de special
 	int	i;
 
 	i = -1;
@@ -45,6 +47,7 @@ void	free_all(char **arg, char **path)
 
 char	**get_arg(t_token **tab)
 {
+	//permet de creer un double array qui va etre passer a execve, ce qui va permettre de de connaitre et d'exectuer les options d'une commande (ex : ls -l, permet de passer le -l pour execve)
 	int		i;
 	char	**arg;
 
@@ -69,6 +72,7 @@ char	**get_arg(t_token **tab)
 
 void new_file(t_token **tab, char *temp, char **env, char **arg)
 {
+	//permet de creer le fichier apres redirection (ex : ls > hassanfdp, creer le fichier hassanfdp)
 	int	check;
 	int	ver;
 	int	file;
@@ -113,6 +117,11 @@ void new_file(t_token **tab, char *temp, char **env, char **arg)
 
 void	find_exec(t_token **new, char **env, t_token **tab)
 {
+	//cherche la commade a exectuer, si la commande n'est pas trouver cherche avec la commande de base
+	//exemple : input = /bin/ls
+	//cherche d'abord dans le PATH (example /sbin/bin/ls, puis /usr/local/bin/bin/ls)
+	//si non essaie d'exectuer l'input directement, dans ce cas : /bin/ls -> execute donc la commande
+	//si rien n'est trouver, affiche erreur commande not found
 	char	**path;
 	char	**arg;
 	char	*temp;
