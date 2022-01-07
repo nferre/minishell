@@ -1,4 +1,0 @@
-- Parse $VAR $? $"" $''
-- echo $"PATH"
-- ech'o'
-- End the escape of character in lexer3.c

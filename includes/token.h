@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:49:09 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 16:59:26 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:01:53 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ typedef struct s_token
 		TOKEN_EXPAND_EXIT_STATUS
 	} e_type;
 	char	*value;
+	int		expanded;
 }			t_token;
 
-t_token	*init_token(int type, char *value);
+t_token	*init_token(int type, char *value, int expanded);
 void	destroy_token(t_token *token);
 t_token	*expand_token(t_token *token);
 #endif

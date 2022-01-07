@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:36:26 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 17:23:36 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:09:41 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef struct s_lexer
 	char			c;
 	unsigned int	i;
 	char			*contents;
-	int				*escape_list;
 }				t_lexer;
 
 // LEXER PARSER
@@ -33,5 +32,4 @@ t_token	*lexer_collect_arg(t_lexer *lexer);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token);
 t_token	*lexer_collect_var(t_lexer *lexer);
-int		*lexer_init_escape_list(char **contents);
 #endif

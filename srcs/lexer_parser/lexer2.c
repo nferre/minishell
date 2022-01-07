@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:44:28 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 17:11:24 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:14:34 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*lexer_collect_quote_string(t_lexer *lexer)
 	}
 	lexer_advance(lexer);
 	value = ft_strndup(lexer->contents + i, j);
-	return (init_token(TOKEN_QUOTE_STRING, value));
+	return (init_token(TOKEN_QUOTE_STRING, value, 0));
 }
 
 t_token	*lexer_collect_double_quote_string(t_lexer *lexer)
@@ -65,12 +65,17 @@ t_token	*lexer_collect_double_quote_string(t_lexer *lexer)
 	}
 	lexer_advance(lexer);
 	value = ft_strndup(lexer->contents + i, j);
-	return (init_token(TOKEN_DOUBLE_QUOTE_STRING, value));
+	return (init_token(TOKEN_DOUBLE_QUOTE_STRING, value, 0));
 }
 
 t_token	*lexer_collect_arg(t_lexer *lexer)
 {
 	char	*value;
+	char	*tmp_value;
+	char	*tmp;
+	char	*tmp2;
+	t_token	*tok;
+	t_lexer	*tmp_lexer;
 	int		i;
 	int		j;
 
@@ -82,7 +87,44 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 		lexer_advance(lexer);
 	}
 	value = ft_strndup((lexer->contents + i), j);
-	return (init_token(TOKEN_ARG, value));
+	tmp = ft_strchr(value, '\"');
+	if (tmp)
+	{
+		tmp2 = ft_strchr(tmp + 1, '\"');
+		if (tmp2)
+		{
+			tmp_lexer = init_lexer(lexer->contents);
+			tmp_lexer->i = (tmp - value) + i;
+			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
+			tok = lexer_collect_double_quote_string(tmp_lexer);
+			tok = expand_token(tok);
+			tmp_value = ft_remstring(value, tmp - value, tmp2 - value + 1);
+			free(value);
+			value = tmp_value;
+			value = ft_strjoin_free_null(value, tok->value);
+			destroy_token(tok);
+			free(tmp_lexer);
+			return (init_token(TOKEN_ARG, value, 1));
+		}
+	}
+	tmp = ft_strchr(value, '\'');
+	if (tmp)
+	{
+		tmp2 = ft_strchr(tmp + 1, '\'');
+		if (tmp2)
+		{
+			tmp_lexer = init_lexer(lexer->contents);
+			tmp_lexer->i = tmp - value;
+			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
+			tok = lexer_collect_quote_string(tmp_lexer);
+			tmp_value = ft_remstring(value, tmp - value, tmp2 - value + 1);
+			free(value);
+			value = tmp_value;
+			value = ft_strjoin_free_null(value, tok->value);
+			return (init_token(TOKEN_ARG, value, 1));
+		}
+	}
+	return (init_token(TOKEN_ARG, value, 0));
 }
 
 t_token	*lexer_collect_var(t_lexer *lexer)
@@ -91,7 +133,7 @@ t_token	*lexer_collect_var(t_lexer *lexer)
 	int		i;
 	int		j;
 
-	lexer_advance(lexer);
+	// lexer_advance(lexer);
 	i = lexer->i;
 	j = 0;
 	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents))) && !ft_isspace(lexer->c))
@@ -100,5 +142,5 @@ t_token	*lexer_collect_var(t_lexer *lexer)
 		lexer_advance(lexer);
 	}
 	value = ft_strndup((lexer->contents + i), j);
-	return (init_token(TOKEN_ENV_VAR, value));
+	return (init_token(TOKEN_ENV_VAR, value, 0));
 }

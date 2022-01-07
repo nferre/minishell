@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 17:36:00 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 15:06:54 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:11:19 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*remove_char_from_token(t_token *token, int i)
 	t_token *tmp_token;
 
 	tmp = ft_remchar(token->value, i);
-	tmp_token = init_token(token->e_type, tmp);
+	tmp_token = init_token(token->e_type, tmp, token->expanded);
 	destroy_token(token);
 	return (tmp_token);
 }
@@ -38,7 +38,7 @@ t_token	*expand_token(t_token *token)
 	i = 0;
 	j = 0;
 	last_exit_status = 0;
-	if ((token && token->value) && ((token->e_type == TOKEN_DOUBLE_QUOTE_STRING) || (token->e_type == TOKEN_ARG) || (token->e_type == TOKEN_ENV_VAR)))
+	if (((token && token->value) && !token->expanded) && ((token->e_type == TOKEN_DOUBLE_QUOTE_STRING) || (token->e_type == TOKEN_ARG) || (token->e_type == TOKEN_ENV_VAR)))
 	{
 		while ((token->value && token->value[i]))
 		{
@@ -67,6 +67,7 @@ t_token	*expand_token(t_token *token)
 				free(token->value);
 				token->value = tmp;
 				free(key);
+				token->expanded = 1;
 				j = 0;
 				i = 0;
 			}
