@@ -6,13 +6,14 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:48:18 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 13:35:41 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/07 14:20:20 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
 t_token	**dup_double_token_array(t_token **tab)
 {
+	//permet de dup un double array t_token
 	int	i;
 	t_token	**new_tab;
 
