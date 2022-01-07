@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 10:05:52 by nferre            #+#    #+#             */
-/*   Updated: 2021/12/06 10:53:55 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/07 14:28:44 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -47,7 +47,9 @@ t_token **get_size(t_token **tab, int *ver, int *check)
 	new = malloc(sizeof(t_token *) * (i + 1));
 	while (tab[j]->e_type == 0)
 	{
-		new[k] = tab[j];
+		new[k] = malloc(sizeof(t_token));
+		new[k]->e_type = tab[j]->e_type;
+		new[k]->value = ft_strdup(tab[j]->value);
 		k++;
 		j++;
 		if (tab[j] == NULL)

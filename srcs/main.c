@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/07 17:17:34 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:21:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	rm(char **env, t_token **new)
 		arg = get_arg(new);
 		if (fork() != 0)
 		{
-			free(new[0]->value);
+			g_data.check_rm = 1;
 			free_arg(arg);
 			wait(NULL);
 			return ;
@@ -250,7 +250,10 @@ gere les signaux ──────► recupere l'input ────────
 		add_history(str);
 		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
-		free_tab(tab);
+		if (g_data.check_rm == 0)
+			free_tab(tab);
+		else
+			g_data.check_rm = 0;
 	}
 	free(str);
 	printf("exit\n");
