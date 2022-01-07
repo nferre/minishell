@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:29:27 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 17:42:36 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 09:40:57 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 #include "lexer.h"
 #include "libft.h"

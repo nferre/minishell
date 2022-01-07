@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 20:06:54 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 12:57:34 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "token.h"
 #include "lexer.h"
 #include "libft.h"
@@ -22,23 +21,33 @@
 
 void	*handler_function(int sig)
 {
+	//permet de gerer les signaux
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		printf("\nminishell$ ");
+		if (g_data.exec == 0)
+		{
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+			printf("\nminishell$> ");
+		}
 	}
 	if (sig == SIGQUIT)
 	{
-		rl_redisplay();
-		printf("minishell$ ");
+		if (g_data.exec == 0)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else
+			printf("Quit: 3\n");
 	}
 	return (NULL);
 }
 
 void	free_arg(char **arg)
 {
+	//free arg dans la fonction rm
 	int	i;
 
 	i = -1;
@@ -49,11 +58,11 @@ void	free_arg(char **arg)
 
 void	rm(char **env, t_token **new)
 {
+	//supprime le ficher cachee
 	char **arg;
 
 	if (access(".HlPusER9jae3ffz5sDJu!=05~", X_OK) != -1)
 	{
-
 		new[0]->value = ft_strdup(".HlPusER9jae3ffz5sDJu!=05~");
 		arg = get_arg(new);
 		if (fork() != 0)
@@ -69,6 +78,7 @@ void	rm(char **env, t_token **new)
 
 void	free_tab(t_token **tab)
 {
+	//free 'tab' (tableau avec tous les tokens) dans prompt et 'new' dans all_builtins
 	int	i;
 
 	i = -1;
@@ -85,6 +95,7 @@ void	free_tab(t_token **tab)
 
 void	all_builtins(t_token **tab, char **env, char *str)
 {
+	//execute les builtins, si aucun builtins trouver alors execve, sinon affiche une erreur pour dire que commande n'existe pas
 	int	i;
 	t_token	**new;
 	char	*to_print;
@@ -120,6 +131,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 
 char	*heredoc(char *str_stop)
 {
+	//creation du fichier cache pour heredoc
 	char 	*temp;
 	int	fd;
 
@@ -144,6 +156,7 @@ char	*heredoc(char *str_stop)
 
 t_token		**get_tab(char *str, char **env)
 {
+	//creer le tableau dans lequel tous les token sont stocke
 	t_token	*token;
 	t_lexer	*lexer;
 	t_token	**tab;
@@ -187,13 +200,42 @@ t_token		**get_tab(char *str, char **env)
 
 void	prompt(char *str, char **env)
 {
+/*
+gere les signaux ──────► recupere l'input ────────► l'ajoute la commande
+                         utilisatueur               a l'historique
+                                                           │
+                                                           │
+                                                           ▼
+                                                    creer le tableau
+                     execute la commande ◄────────  de token
+
+
+
+                        │               │            
+                        │               │
+                        │               │
+                        │               │
+                        │               │
+                        │               │
+
+
+
+               │
+               └─                                │
+                 ┼                              ┌┘
+                  ──                           ┌┘
+                    ──                       ┌─┘
+                      ───                  ┌─┘
+                         ┼ ───         ┌───┘
+                              ─── ─────┘
+ */
 	struct termios *term;
 	char	*str_joined;
 	t_token	**tab;
 
 	term = malloc(sizeof(struct termios));
 	tcgetattr(0, term);
-	term->c_lflag &= ~ECHOCTL;
+	term->c_lflag &= ~(ECHOCTL);
 	tcsetattr(0, TCSANOW,term);
 	while (str != NULL)
 	{

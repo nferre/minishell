@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/06 14:23:10 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 12:57:35 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 	int	file;
 
 	i = -1;
+	g_data.exec = 1;
 	arg = get_arg(new);
 	cpy = new[0]->value;
 	path = ft_split(getenv("PATH") , ':');
@@ -135,6 +136,7 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 			if (fork() != 0)
 			{
 				wait(&wstatus);
+				g_data.exec = 0;
 				if (WIFEXITED(wstatus))
 					g_data.last_exit_status = WEXITSTATUS(wstatus);
 				free(temp);
