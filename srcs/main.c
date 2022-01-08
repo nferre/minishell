@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/07 17:21:05 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:22:53 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,15 +245,18 @@ gere les signaux ──────► recupere l'input ────────
 		str = readline("minishell$> ");
 		if (str == NULL)
 			break ;
-		else if (str[0] == '\0' || is_empty(str) == 0)
+		else if (str[0] == '\0')
 			continue ;
+		else if (is_empty(str) == 0)
+		{
+			add_history(str);
+			continue ;
+		}
 		add_history(str);
 		tab = get_tab(str, env);
 		all_builtins(tab, env, str);
-		if (g_data.check_rm == 0)
-			free_tab(tab);
-		else
-			g_data.check_rm = 0;
+		free_tab(tab);
+		g_data.check_rm = 0;
 	}
 	free(str);
 	printf("exit\n");
