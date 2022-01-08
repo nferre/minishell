@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/07 17:22:53 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/08 10:03:47 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("ech\"o\" $\"PATH\""));
+	// t_lexer *test = init_lexer(ft_strdup("echo $\'PATH\'"));
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:44:28 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 17:14:34 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:44:24 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 	t_lexer	*tmp_lexer;
 	int		i;
 	int		j;
+	int		tmp_minus_value;
 
 	i = lexer->i;
 	j = 0;
@@ -88,13 +89,20 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 	}
 	value = ft_strndup((lexer->contents + i), j);
 	tmp = ft_strchr(value, '\"');
+	tmp_minus_value = tmp - value;
 	if (tmp)
 	{
 		tmp2 = ft_strchr(tmp + 1, '\"');
+		if (value != tmp && value != tmp && *(tmp - 1) == '$')
+		{
+			tmp_value = ft_remchar(value, tmp_minus_value - 1);
+			free(value);
+			value = tmp_value;
+		}
 		if (tmp2)
 		{
 			tmp_lexer = init_lexer(lexer->contents);
-			tmp_lexer->i = (tmp - value) + i;
+			tmp_lexer->i = tmp_minus_value + i;
 			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
 			tok = lexer_collect_double_quote_string(tmp_lexer);
 			tok = expand_token(tok);
@@ -108,13 +116,20 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 		}
 	}
 	tmp = ft_strchr(value, '\'');
+	tmp_minus_value = tmp - value;
 	if (tmp)
 	{
 		tmp2 = ft_strchr(tmp + 1, '\'');
+		if (value != tmp && value != tmp && *(tmp - 1) == '$')
+		{
+			tmp_value = ft_remchar(value, tmp_minus_value - 1);
+			free(value);
+			value = tmp_value;
+		}
 		if (tmp2)
 		{
 			tmp_lexer = init_lexer(lexer->contents);
-			tmp_lexer->i = tmp - value;
+			tmp_lexer->i = tmp_minus_value + i;
 			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
 			tok = lexer_collect_quote_string(tmp_lexer);
 			tmp_value = ft_remstring(value, tmp - value, tmp2 - value + 1);
