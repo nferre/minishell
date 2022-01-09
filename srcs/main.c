@@ -6,7 +6,11 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/08 10:03:47 by nferre           ###   ########.fr       */
+=======
+/*   Updated: 2022/01/08 16:21:53 by hadufer          ###   ########.fr       */
+>>>>>>> cdf797d01741ae05104c69bc73ddd96c9087c1aa
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +127,10 @@ void	all_builtins(t_token **tab, char **env, char *str)
 		printf("%s", to_print);
 	free(to_print);
 	if (i != 0)
+	{
+		free_tab(new);
 		return ;
+	}
 	find_exec(new, env, tab);
 	rm(env, new);
 	free_tab(new);
