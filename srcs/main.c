@@ -6,14 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/08 10:03:47 by nferre           ###   ########.fr       */
-=======
-/*   Updated: 2022/01/08 16:21:53 by hadufer          ###   ########.fr       */
->>>>>>> cdf797d01741ae05104c69bc73ddd96c9087c1aa
+/*   Updated: 2022/01/10 16:06:34 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "lexer.h"
 #include "libft.h"
 #include "minishell.h"
@@ -35,6 +30,8 @@ void	*handler_function(int sig)
 			rl_redisplay();
 			printf("\nminishell$> ");
 		}
+		else
+			printf("\n");
 	}
 	if (sig == SIGQUIT)
 	{
@@ -109,15 +106,19 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	check = 0;
 	ver = 0;
 	i = 0;
-	i = 0;
 	if (check_redirect(tab) != 0)
 		new = get_new_tab(tab, &ver, &check);
 	else
 		new = dup_double_token_array(tab);
+	if (new[0]->value[0] == '\0')
+	{
+		free_tab(new);
+		return ;
+	}
 	to_print = echo(new, &i);
-	i += unset(new, env, &i);
+	unset(new, env, &i);
 	to_print = show_env(new, env, &i, to_print);
-	i += cd(new);
+	i += cd(new, env);
 	to_print = pwd(new, &i, to_print);
 	i += export_var(new, env);
 	exit_all(new);
@@ -197,6 +198,8 @@ t_token		**get_tab(char *str, char **env)
 			token = expand_token(token);
 			token->value = heredoc(token->value);
 		}
+		else if (token->e_type == 7 || token->e_type == 8)
+			token->e_type = 0;
 		tab[i] = token;
 		i++;
 	}
@@ -236,14 +239,13 @@ gere les signaux ──────► recupere l'input ────────
                          ┼ ───         ┌───┘
                               ─── ─────┘
  */
-	struct termios *term;
 	char	*str_joined;
 	t_token	**tab;
 
-	term = malloc(sizeof(struct termios));
-	tcgetattr(0, term);
-	term->c_lflag &= ~(ECHOCTL);
-	tcsetattr(0, TCSANOW,term);
+	g_data.term = malloc(sizeof(struct termios));
+	tcgetattr(0, g_data.term);
+	g_data.term->c_lflag &= ~(ECHOCTL);
+	tcsetattr(0, TCSANOW, g_data.term);
 	while (str != NULL)
 	{
 		free(str);

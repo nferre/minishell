@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/07 14:10:23 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/09 09:36:45 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -34,12 +34,15 @@ char	*get_str_to_print(t_token **tab, int i)
 	i++;
 	while (tab[i])
 	{
-		if (tab[i]->e_type != 0)
+		if (tab[i]->e_type == 0 || tab[i]->e_type == 7)
+		{
+			temp = ft_strjoin(" ", tab[i]->value);
+			final_str = ft_strjoin_free(final_str, temp);
+			free(temp);
+			i++;
+		}
+		else
 			break ;
-		temp = ft_strjoin(" ", tab[i]->value);
-		final_str = ft_strjoin_free(final_str, temp);
-		free(temp);
-		i++;
 	}
 	return (final_str);
 }
@@ -51,7 +54,7 @@ char	*echo(t_token **tab, int *j)
 	int		ver;
 	char	*to_print;
 	char	*temp;
-	//fix when -n
+	
 	i = -1;
 	ver = 0;
 	echo = "echo";

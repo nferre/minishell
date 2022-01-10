@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 15:02:50 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/10 16:06:31 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 char	*get_command(char *str)
@@ -51,18 +50,15 @@ char	**get_arg(t_token **tab)
 	int		i;
 	char	**arg;
 
-	i = 0;
-	while (tab[i])
-	{
-		if (tab[i]->e_type != 0)
+	i = -1;
+	while (tab[++i])
+		if (tab[i]->e_type != 0 && tab[i]->e_type != 7 && tab[i]->e_type != 8)
 			break ;
-		i++;
-	}
 	arg = malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while(tab[++i])
 	{
-		if (tab[i]->e_type != 0)
+		if (tab[i]->e_type != 0 && tab[i]->e_type != 7 && tab[i]->e_type != 8)
 			break ;
 		arg[i] = ft_strdup(tab[i]->value);
 	}
@@ -133,6 +129,15 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 
 	i = -1;
 	g_data.exec = 1;
+	g_data.term->c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, g_data.term);
+	cpy = getenv("PATH");
+	if (!(cpy))
+	{
+		printf("minishell: %s: No such file or directory\n", new[0]->value);
+		free(cpy);
+		return ;
+	}
 	arg = get_arg(new);
 	cpy = new[0]->value;
 	path = ft_split(getenv("PATH") , ':');
@@ -146,6 +151,8 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 			{
 				wait(&wstatus);
 				g_data.exec = 0;
+				g_data.term->c_lflag &= ~ECHOCTL;
+				tcsetattr(0, TCSANOW, g_data.term);
 				if (WIFEXITED(wstatus))
 					g_data.last_exit_status = WEXITSTATUS(wstatus);
 				free(temp);
@@ -165,12 +172,24 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 	{
 		if(fork() != 0)
 		{
-			wait(NULL);
+			wait(&wstatus);
+			g_data.exec = 0;
+			g_data.term->c_lflag &= ~ECHOCTL;
+			tcsetattr(0, TCSANOW, g_data.term);
+				if (WIFEXITED(wstatus))
+					g_data.last_exit_status = WEXITSTATUS(wstatus);	
 			free_all(arg, path);
 			return ;
 		}
-		execve(new[0]->value, arg, env);
+		if (check_redirect(tab) == 0)
+			execve(tab[0]->value, arg, env);
+		else
+			new_file(tab, tab[0]->value, env, arg);
 	}
+	g_data.term->c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, g_data.term);
+	g_data.exec = 0;
+	g_data.last_exit_status = 1;
 	printf("minishell: %s: command not found\n", new[0]->value);
 	free_all(arg, path);
 }

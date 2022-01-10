@@ -6,10 +6,9 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 19:15:23 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/09 17:33:37 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 #include "libft.h"
 
@@ -19,9 +18,13 @@ void	del_elem_env(char **env, char *data_name)
 	int		line;
 
 	line = get_line_local_var(env, data_name);
-	free(env[line]);
-	env[line] = malloc(sizeof(char) * 14);
-	env[line] = "7ca7486dfc94b";
+	if (line == -1)
+		return ;
+	printf("ici %d\n", line);
+	env[line][0] = '\0';
+	//free(env[line]);
+	//env[line] = malloc(sizeof(char) * 14);
+	//env[line] = "7ca7486dfc94b";
 }
 
 char	**add_elem_env(char **env, char *data, char *data_name)

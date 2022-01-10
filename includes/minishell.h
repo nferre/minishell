@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 17:21:10 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:00:22 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <termios.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <string.h>
 
 typedef struct	s_data
 {
@@ -29,6 +31,7 @@ typedef struct	s_data
 	int		last_exit_status;
 	int		exec;
 	int		check_rm;
+	struct	termios *term;
 }				t_data;
 
 t_data	g_data;
@@ -51,7 +54,7 @@ char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	all_builtins(t_token **tab, char **env, char *str);
 char	*echo(t_token **tab, int *i);
-int		cd(t_token **tab);
+int		cd(t_token **tab, char **env);
 char	*pwd(t_token **tab, int *i, char *to_print);
 void	prompt(char *str, char **env);
 void	*handler_function(int sig);
@@ -61,7 +64,8 @@ void	exit_all(t_token **tab);
 void	del_elem_env(char **env, char *data_name);
 char	*show_env(t_token **tab, char **env, int *j, char *to_print);
 int		get_line_local_var(char **env, char *data_name);
-int		unset(t_token **tab, char **env, int *g);
+void	unset(t_token **tab, char **env, int *g);
+char	*get_name(t_token **tab);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
