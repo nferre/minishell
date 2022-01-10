@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/10 16:06:34 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/10 18:42:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -106,35 +106,42 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	check = 0;
 	ver = 0;
 	i = 0;
-	if (check_redirect(tab) != 0)
-		new = get_new_tab(tab, &ver, &check);
-	else
-		new = dup_double_token_array(tab);
-	if (new[0]->value[0] == '\0')
+	//if (check_redirect(tab) != 0)
+	//	new = get_new_tab(tab, &ver, &check);
+	//else
+	//	new = dup_double_token_array(tab);
+	if (tab[0]->value[0] == '\0')
 	{
-		free_tab(new);
+		printf("minishell : : command not found\n");
+		//free_tab(new);
 		return ;
 	}
-	to_print = echo(new, &i);
-	unset(new, env, &i);
-	to_print = show_env(new, env, &i, to_print);
-	i += cd(new, env);
-	to_print = pwd(new, &i, to_print);
-	i += export_var(new, env);
-	exit_all(new);
-	if (check_redirect(tab) != 0 && i > 0)
-		redirect_output(to_print, tab, &ver);
-	else if (to_print != NULL)
-		printf("%s", to_print);
+	//else if (verify_redirect(new) == 1)
+	//{
+		//printf("minishell : syntax error near unexpected token `newline'\n");
+		//free(new);
+		//return ;
+	//}
+	to_print = echo(tab, &i);
+	unset(tab, env, &i);
+	to_print = show_env(tab, env, &i, to_print);
+	i += cd(tab, env);
+	to_print = pwd(tab, &i, to_print);
+	i += export_var(tab, env);
+	exit_all(tab);
+	//if (check_redirect(tab) != 0 && i > 0)
+	//	redirect_output(to_print, tab, &ver);
+	//else if (to_print != NULL)
+	//printf("%s", to_print);
 	free(to_print);
-	if (i != 0)
-	{
-		free_tab(new);
-		return ;
-	}
+	//if (i != 0)
+	//{
+	//	free_tab(new);
+	//	return ;
+	//}
 	find_exec(new, env, tab);
-	rm(env, new);
-	free_tab(new);
+	//rm(env, new);
+	//free_tab(new);
 }
 
 char	*heredoc(char *str_stop)

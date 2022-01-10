@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/10 16:06:31 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/10 18:41:56 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -138,8 +138,8 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 		free(cpy);
 		return ;
 	}
-	arg = get_arg(new);
-	cpy = new[0]->value;
+	arg = get_arg(tab);
+	cpy = tab[0]->value;
 	path = ft_split(getenv("PATH") , ':');
 	while (path[++i])
 	{
@@ -160,15 +160,15 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 				free_all(arg, path);
 				return ;
 			}
-			if (check_redirect(tab) == 0)
-				execve(temp, arg, env);
-			else
-				new_file(tab, temp, env, arg);
+			//if (check_redirect(tab) == 0)
+			execve(temp, arg, env);
+			//else
+			//	new_file(tab, temp, env, arg);
 		}
 		free(temp);
 		free(temp2);
 	}
-	if (access(new[0]->value, X_OK) != -1)
+	if (access(tab[0]->value, X_OK) != -1)
 	{
 		if(fork() != 0)
 		{
@@ -181,10 +181,10 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 			free_all(arg, path);
 			return ;
 		}
-		if (check_redirect(tab) == 0)
-			execve(tab[0]->value, arg, env);
-		else
-			new_file(tab, tab[0]->value, env, arg);
+		//if (check_redirect(tab) == 0)
+		execve(tab[0]->value, arg, env);
+		//else
+			//new_file(tab, tab[0]->value, env, arg);
 	}
 	g_data.term->c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);

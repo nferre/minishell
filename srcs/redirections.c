@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 10:05:52 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/09 15:40:19 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/10 18:37:00 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -27,8 +27,8 @@ int	get_nb_red(t_token **tab)
 t_token **get_size(t_token **tab, int *ver, int *check)
 {
 	static int	i;
-	int	j;
-	int	k;
+	int			j;
+	int			k;
 	t_token **new;
 
 	k = 0;
@@ -111,6 +111,17 @@ void	redirect_output(char *str, t_token **tab, int *ver)
 		create_file(str, new[0]->value, check_redirect(tab));
 		i++;
 	}
+}
+
+int	verify_redirect(t_token **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		if ((tab[i]->e_type >= 1 || tab[i]->e_type <= 4) && (tab[i + 1] == NULL))
+			return (1);
+	return (0);
 }
 
 int	check_redirect(t_token **tab)
