@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/10 18:42:10 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/11 18:47:14 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -122,7 +122,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 		//free(new);
 		//return ;
 	//}
-	to_print = echo(tab, &i);
+	i = echo(tab);
 	unset(tab, env, &i);
 	to_print = show_env(tab, env, &i, to_print);
 	i += cd(tab, env);
@@ -134,11 +134,8 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	//else if (to_print != NULL)
 	//printf("%s", to_print);
 	free(to_print);
-	//if (i != 0)
-	//{
-	//	free_tab(new);
-	//	return ;
-	//}
+	if (i != 0)
+		return ;
 	find_exec(new, env, tab);
 	//rm(env, new);
 	//free_tab(new);
