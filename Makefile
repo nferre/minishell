@@ -6,7 +6,7 @@
 #    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:55:02 by hadufer           #+#    #+#              #
-#    Updated: 2022/01/12 11:19:21 by hadufer          ###   ########.fr        #
+#    Updated: 2022/01/12 11:50:00 by hadufer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer_parser/*.c) $(wildcard ./s
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Libft -I./Libftprintf -I./includes -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -I./Libftprintf/Get_next_line -I./Libftprintf/Libft -I./Libftprintf -I./includes -c $< -o $@
 
 all: $(NAME)
 

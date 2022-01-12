@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:55:15 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/06 17:39:24 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/10 18:56:50 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+#include "libft.h"
 
 void	exit_all(t_token **tab)
 {
