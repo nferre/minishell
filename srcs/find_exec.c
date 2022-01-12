@@ -6,9 +6,10 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/10 18:41:56 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/11 18:19:54 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_command(char *str)
@@ -44,23 +45,30 @@ void	free_all(char **arg, char **path)
 	free(path);
 }
 
-char	**get_arg(t_token **tab)
+char	**get_arg(t_token **tab, int i_to_exec)
 {
 	//permet de creer un double array qui va etre passer a execve, ce qui va permettre de de connaitre et d'exectuer les options d'une commande (ex : ls -l, permet de passer le -l pour execve)
 	int		i;
+	int		tab_i;
 	char	**arg;
 
-	i = -1;
-	while (tab[++i])
-		if (tab[i]->e_type != 0 && tab[i]->e_type != 7 && tab[i]->e_type != 8)
-			break ;
-	arg = malloc(sizeof(char *) * (i + 1));
-	i = -1;
-	while(tab[++i])
+	i = i_to_exec;
+	while (tab[i])
 	{
 		if (tab[i]->e_type != 0 && tab[i]->e_type != 7 && tab[i]->e_type != 8)
 			break ;
-		arg[i] = ft_strdup(tab[i]->value);
+		i++;
+	}
+	arg = malloc(sizeof(char *) * ((i - i_to_exec) + 1));
+	i = 0;
+	tab_i = i + i_to_exec;
+	while(tab[tab_i])
+	{
+		if (tab[tab_i]->e_type != 0 && tab[tab_i]->e_type != 7 && tab[tab_i]->e_type != 8)
+			break ;
+		arg[i] = ft_strdup(tab[tab_i]->value);
+		i++;
+		tab_i++;
 	}
 	arg[i] = NULL;
 	return (arg);
@@ -111,7 +119,7 @@ void new_file(t_token **tab, char *temp, char **env, char **arg)
 	}
 }
 
-void	find_exec(t_token **new, char **env, t_token **tab)
+void	find_exec(char **env, t_token **tab, int i_to_exec)
 {
 	//cherche la commade a exectuer, si la commande n'est pas trouver cherche avec la commande de base
 	//exemple : input = /bin/ls
@@ -134,12 +142,12 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 	cpy = getenv("PATH");
 	if (!(cpy))
 	{
-		printf("minishell: %s: No such file or directory\n", new[0]->value);
+		printf("minishell: %s: No such file or directory\n", tab[i_to_exec]->value);
 		free(cpy);
 		return ;
 	}
-	arg = get_arg(tab);
-	cpy = tab[0]->value;
+	arg = get_arg(tab, i_to_exec);
+	cpy = tab[i_to_exec]->value;
 	path = ft_split(getenv("PATH") , ':');
 	while (path[++i])
 	{
@@ -160,15 +168,12 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 				free_all(arg, path);
 				return ;
 			}
-			//if (check_redirect(tab) == 0)
 			execve(temp, arg, env);
-			//else
-			//	new_file(tab, temp, env, arg);
 		}
 		free(temp);
 		free(temp2);
 	}
-	if (access(tab[0]->value, X_OK) != -1)
+	if (access(tab[i_to_exec]->value, X_OK) != -1)
 	{
 		if(fork() != 0)
 		{
@@ -176,20 +181,17 @@ void	find_exec(t_token **new, char **env, t_token **tab)
 			g_data.exec = 0;
 			g_data.term->c_lflag &= ~ECHOCTL;
 			tcsetattr(0, TCSANOW, g_data.term);
-				if (WIFEXITED(wstatus))
-					g_data.last_exit_status = WEXITSTATUS(wstatus);	
+			if (WIFEXITED(wstatus))
+				g_data.last_exit_status = WEXITSTATUS(wstatus);	
 			free_all(arg, path);
 			return ;
 		}
-		//if (check_redirect(tab) == 0)
-		execve(tab[0]->value, arg, env);
-		//else
-			//new_file(tab, tab[0]->value, env, arg);
+		execve(tab[i_to_exec]->value, arg, env);
 	}
 	g_data.term->c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
 	g_data.exec = 0;
 	g_data.last_exit_status = 1;
-	printf("minishell: %s: command not found\n", new[0]->value);
+	printf("minishell: %s: command not found\n", tab[i_to_exec]->value);
 	free_all(arg, path);
 }

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_global_data.c                                 :+:      :+:    :+:   */
+/*   get_tab_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 13:36:50 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/11 16:16:20 by hadufer          ###   ########.fr       */
+/*   Created: 2022/01/10 22:50:22 by hadufer           #+#    #+#             */
+/*   Updated: 2022/01/10 22:51:42 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
+#include "token.h"
 
-void	init_global_data(char **env)
+int	get_tab_length(t_token **tab)
 {
-	g_data.env = env;
-	g_data.last_exit_status = 0;
-	g_data.exec = 0;
-	g_data.check_rm = 0;
-	g_data.more_than_one_operand = 0;
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

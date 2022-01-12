@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   new_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/10 18:42:10 by nferre           ###   ########.fr       */
+/*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
+/*   Updated: 2022/01/12 11:05:31 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "lexer.h"
 #include "libft.h"
 #include "minishell.h"
@@ -57,26 +58,6 @@ void	free_arg(char **arg)
 	free(arg);
 }
 
-void	rm(char **env, t_token **new)
-{
-	//supprime le ficher cachee
-	char **arg;
-
-	if (access(".HlPusER9jae3ffz5sDJu!=05~", X_OK) != -1)
-	{
-		new[0]->value = ft_strdup(".HlPusER9jae3ffz5sDJu!=05~");
-		arg = get_arg(new);
-		if (fork() != 0)
-		{
-			g_data.check_rm = 1;
-			free_arg(arg);
-			wait(NULL);
-			return ;
-		}
-		execve("/bin/rm", arg, env);
-	}
-}
-
 void	free_tab(t_token **tab)
 {
 	//free 'tab' (tableau avec tous les tokens) dans prompt et 'new' dans all_builtins
@@ -96,77 +77,45 @@ void	free_tab(t_token **tab)
 
 void	all_builtins(t_token **tab, char **env, char *str)
 {
-	//execute les builtins, si aucun builtins trouver alors execve, sinon affiche une erreur pour dire que commande n'existe pas
 	int	i;
 	t_token	**new;
 	char	*to_print;
 	int ver;
 	int	check;
 
+	int	fd_pipe[2];
+	int	i_to_exec;
+
 	check = 0;
 	ver = 0;
 	i = 0;
-	//if (check_redirect(tab) != 0)
-	//	new = get_new_tab(tab, &ver, &check);
-	//else
-	//	new = dup_double_token_array(tab);
+	i_to_exec = get_first_operand_index(tab, 0);
 	if (tab[0]->value[0] == '\0')
 	{
 		printf("minishell : : command not found\n");
-		//free_tab(new);
 		return ;
 	}
-	//else if (verify_redirect(new) == 1)
-	//{
-		//printf("minishell : syntax error near unexpected token `newline'\n");
-		//free(new);
-		//return ;
-	//}
-	to_print = echo(tab, &i);
-	unset(tab, env, &i);
-	to_print = show_env(tab, env, &i, to_print);
-	i += cd(tab, env);
-	to_print = pwd(tab, &i, to_print);
-	i += export_var(tab, env);
-	exit_all(tab);
-	//if (check_redirect(tab) != 0 && i > 0)
-	//	redirect_output(to_print, tab, &ver);
-	//else if (to_print != NULL)
-	//printf("%s", to_print);
-	free(to_print);
-	//if (i != 0)
-	//{
-	//	free_tab(new);
-	//	return ;
-	//}
-	find_exec(new, env, tab);
-	//rm(env, new);
-	//free_tab(new);
-}
-
-char	*heredoc(char *str_stop)
-{
-	//creation du fichier cache pour heredoc
-	char 	*temp;
-	int	fd;
-
-	fd = open(".HlPusER9jae3ffz5sDJu!=05~", O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	printf("\n");
-	temp = malloc(sizeof(char));
-	temp[0] = '\0';
-	while (ft_strncmp(temp, str_stop, ft_strlen(str_stop)))
+	if (count_operand(tab, 0) > 1)
+		stdout_stdin_pipe();
+	while (i_to_exec > -1)
 	{
-		free(temp);
-		temp = readline("> ");
-		ft_putendl_fd(temp, fd);
+		if (tab[i_to_exec]->e_type == TOKEN_PIPE)
+			pipe_exec(tab, i_to_exec);
+		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT_APPEND)
+		// 	redirect_out_append_exec(tab, i_to_exec);
+		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN_HEREDOC)
+		// 	redirect_in_heredoc_exec(tab, i_to_exec);
+		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN)
+		// 	redirect_in_exec(tab, i_to_exec);
+		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT)
+		// 	redirect_out_exec(tab, i_to_exec);
+		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
-	free(temp);
-	close(fd);
-	free(str_stop);
-	return (".HlPusER9jae3ffz5sDJu!=05~");
+	if (count_operand(tab, 0) == 0)
+	{
+		exit_all(tab);
+		find_exec(env, tab, 0);
+	}
 }
 
 t_token		**get_tab(char *str, char **env)
@@ -198,13 +147,6 @@ t_token		**get_tab(char *str, char **env)
 		token = expand_token(token);
 		if (token->e_type == 2)
 			continue ;
-		else if (token->e_type == 3)
-		{
-			destroy_token(token);
-			token = lexer_get_next_token(lexer);
-			token = expand_token(token);
-			token->value = heredoc(token->value);
-		}
 		else if (token->e_type == 7 || token->e_type == 8)
 			token->e_type = 0;
 		tab[i] = token;
@@ -225,27 +167,7 @@ gere les signaux ──────► recupere l'input ────────
                                                            ▼
                                                     creer le tableau
                      execute la commande ◄────────  de token
-
-
-
-                        │               │            
-                        │               │
-                        │               │
-                        │               │
-                        │               │
-                        │               │
-
-
-
-               │
-               └─                                │
-                 ┼                              ┌┘
-                  ──                           ┌┘
-                    ──                       ┌─┘
-                      ───                  ┌─┘
-                         ┼ ───         ┌───┘
-                              ─── ─────┘
- */
+*/
 	char	*str_joined;
 	t_token	**tab;
 
@@ -289,7 +211,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("echo $\'PATH\'"));
+	// t_lexer *test = init_lexer(ft_strdup("echo test| grep test"));
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)
