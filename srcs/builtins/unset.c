@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 15:03:26 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:08:16 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:46:48 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -22,7 +22,7 @@ int	unset(t_token **tab, char **env, int i_to_exec)
 	i = -1;
 	j = -1;
 	k = 0;
-	while (++i != 5)
+	while (++i != 6)
 		if (tab[i_to_exec]->value[i] != unset[i])
 			return (0);
 	i++;

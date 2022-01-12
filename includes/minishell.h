@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 13:16:11 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 15:39:59 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef enum
 
 t_data	g_data;
 
+int		check_arg(t_token **tab, int i_to_exec);
+int		check_export(t_token **tab, int i_to_exec);
 char	**get_arg(t_token **tab, int i_to_exec);
 char	*get_local_var(char **env, char *str);
 void	redirect_output(char *str, t_token **tab, int *ver);
@@ -61,7 +63,7 @@ t_token	**get_new_tab(t_token **tab, int *ver, int *check);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int i);
 size_t	ft_strlen(const char *s);
 char	**add_elem_env(char **env, char *data, char *data_name);
-int		verify(t_token **tab);
+int		verify(t_token **tab, int i_to_exec);
 int		export_var(t_token **tab, char **env, int i_to_exec);
 void	rl_replace_line(const char *str, int i);
 char	*ft_strdup(const char *str);

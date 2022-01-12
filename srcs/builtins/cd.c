@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:02:30 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:46:38 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -55,7 +55,7 @@ int	cd(t_token **tab, char **env, int i_to_exec)
 
 	cd = "cd";
 	i = -1;
-	while (++i != 2)
+	while (++i != 3)
 		if (cd[i] != tab[i_to_exec]->value[i])
 			return (0);
 	home = getenv("HOME");

@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:31:31 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:06:55 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:47:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -21,7 +21,7 @@ int	pwd(t_token **tab, int i_to_exec)
 	i = 0;
 	while (tab[i_to_exec]->value[i] == ' ')
 		i++;
-	while (++i != 3)
+	while (++i != 4)
 		if (pwd[i] != tab[i_to_exec]->value[i])
 			return (0);
 	printf("%s\n", getcwd(cwd, sizeof(cwd)));

@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:13:39 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:13:40 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 15:38:11 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -63,8 +63,19 @@ int	export_var(t_token **tab, char **env, int i_to_exec)
 {
 	char	*data_name;
 	char	*data;
+	int		i;
 
-	if (verify(tab) == 1)
+	i = -1;
+	if (check_export(tab, i_to_exec) == 1)
+		return (0);
+	if (tab[i_to_exec + 1] == NULL)
+	{
+		while (g_data.env[++i])
+			if (g_data.env[i][0] != '\0')
+				printf("declare -x %s\n", g_data.env[i]);
+		return (6);
+	}
+	if (check_arg(tab, i_to_exec) == 1)
 		return (0);
 	data_name = get_name(tab, i_to_exec);
 	if (get_local_var(env, data_name))

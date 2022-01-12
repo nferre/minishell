@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:41:18 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:46:32 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -57,7 +57,7 @@ int	echo(t_token **tab, int i_to_exec)
 	i = -1;
 	ver = 0;
 	echo = "echo";
-	while (++i != 4)
+	while (++i != 5)
 		if (tab[i_to_exec]->value[i] != echo[i])
 			return (0);
 	if (tab[i_to_exec + 1] == NULL)

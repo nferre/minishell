@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:25:46 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 14:30:24 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:43:37 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	pipe_exec(t_token **tab, int i_to_exec)
 	int tmp_STDIN;
 
 	i = i_to_exec - 1;
-	if (tab[i_to_exec]->e_type == TOKEN_PIPE && (tab[i_to_exec + 1] == NULL || tab[i_to_exec + 1]->value[0] == '\0'))
+	if (((tab[i_to_exec]->e_type == TOKEN_PIPE && (tab[i_to_exec + 1] == NULL || tab[i_to_exec + 1]->value[0] == '\0')) || tab[0]->value[0] == '|'))
 	{
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
