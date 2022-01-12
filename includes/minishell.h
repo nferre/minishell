@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 18:42:57 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/12 20:06:14 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*get_name(t_token **tab, int i_to_exec);
 int		verify_redirect(t_token **tab);
 int		pipe_exec(t_token **tab, int i_to_exec);
 int		check_exec_builtins(t_token **tab, int i_to_exec);
+int		redirect_in_exec(t_token **tab, int i_to_exec);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
