@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 11:16:32 by hadufer          ###   ########.fr       */
+/*   Created: 2021/11/14 13:03:11 by nferre            #+#    #+#             */
+/*   Updated: 2022/01/12 13:20:40 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,10 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	}
 	if (count_operand(tab, 0) == 0)
 	{
+		i_to_exec = 0;
 		exit_all(tab);
-		find_exec(env, tab, 0);
+		if (check_exec_builtins(tab, i_to_exec) == 0)
+			find_exec(env, tab, 0);
 	}
 }
 

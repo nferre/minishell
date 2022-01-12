@@ -6,12 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 15:03:26 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/11 18:35:53 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 13:08:16 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	unset(t_token **tab, char **env)
+int	unset(t_token **tab, char **env, int i_to_exec)
 {
 	int		i;
 	int		j;
@@ -23,21 +23,18 @@ int	unset(t_token **tab, char **env)
 	j = -1;
 	k = 0;
 	while (++i != 5)
-		if (tab[0]->value[i] != unset[i])
+		if (tab[i_to_exec]->value[i] != unset[i])
 			return (0);
 	i++;
-	while (tab[1]->value[k])
+	while (tab[i_to_exec + 1]->value[k])
 		k++;
 	while (env[++j])
 	{
-		if (ft_strncmp(env[j], tab[1]->value, k) == 0)
+		if (ft_strncmp(env[j], tab[i_to_exec + 1]->value, k) == 0)
 		{
 			env[j][0] = '\0';
-			//free(env[j]);
-			//env[j] = malloc(sizeof(char) * 14);
-			//env[j] = "7ca7486dfc94b";
-			return (1);
+			return (5);
 		}
 	}
-	return (1);
+	return (5);
 }

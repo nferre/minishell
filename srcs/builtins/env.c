@@ -6,12 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:08:50 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/11 18:37:03 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 13:05:53 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	show_env(t_token **tab, char **env)
+int	show_env(t_token **tab, char **env, int i_to_exec)
 {
 	int	i;
 	char	*check;
@@ -19,11 +19,11 @@ int	show_env(t_token **tab, char **env)
 	check = "env";
 	i = -1;
 	while (++i != 3)
-		if (tab[0]->value[i] != check[i])
+		if (tab[i_to_exec]->value[i] != check[i])
 			return (0);
 	i = -1;
 	while (env[++i])
 		if (env[i][0] != '\0')
 			printf("%s\n", env[i]);
-	return (1);
+	return (3);
 }
