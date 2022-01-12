@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:00:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/11 16:09:14 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:58:54 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,18 @@ int	count_operand(t_token **tab, int i_to_exec)
 		i++;
 	}
 	return (j);
+}
+
+int	is_last_operand(t_token **tab, int i_to_exec)
+{
+	if ((count_operand(tab, i_to_exec) - 1) == 0)
+		return (1);
+	return (0);
+}
+
+int	is_first_operand(t_token **tab, int i_to_exec)
+{
+	if (i_to_exec == get_first_operand_index(tab, 0))
+		return (1);
+	return (0);
 }

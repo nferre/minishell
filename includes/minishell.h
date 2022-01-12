@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 11:16:38 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:59:21 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ typedef struct	s_data
 	int		check_rm;
 	struct	termios *term;
 	int		more_than_one_operand;
-	int		fd_operand_pipe[2];
 	int		fd_base_stdin;
 	int		fd_base_stdout;
+	int		fd_operand_pipe[2];
 }				t_data;
 
 t_data	g_data;
@@ -88,5 +88,10 @@ int		is_empty(char *str);
 int		get_first_operand_index(t_token **tab, int i_to_exec);
 int		get_tab_length(t_token **tab);
 int		count_operand(t_token **tab, int i_to_exec);
-void	stdout_stdin_pipe();
+void	stdout_stdin_pipe(void);
+void	redirect_stdout_stdin_pipe(void);
+void	redirect_stdin_pipe(void);
+void	redirect_stdout_pipe(void);
+int		is_last_operand(t_token **tab, int i_to_exec);
+int		is_first_operand(t_token **tab, int i_to_exec);
 #endif
