@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:25:46 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 13:18:12 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 13:41:05 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	pipe_exec(t_token **tab, int i_to_exec)
 	while (tab[i] && (i > 0) && (i != get_first_operand_index(tab, i)))
 		i--;
 	if (count_operand(tab, i_to_exec) >= count_operand(tab, 0))
-		if (check_exec_builtins(tab, i_to_exec) == 0)
+		if (check_exec_builtins(tab, i) == 0)
 			find_exec(g_data.env, tab, i);
 	dup2(tmp_STDOUT, STDOUT_FILENO);
 	dup2(fd_pipe[0], STDIN_FILENO);
 	close(fd_pipe[0]);
-	if (check_exec_builtins(tab, i_to_exec) == 0)
+	if (check_exec_builtins(tab, i_to_exec + 1) == 0)
 		find_exec(g_data.env, tab, i_to_exec + 1);
 	dup2(tmp_STDIN, STDIN_FILENO);
 	return (0);
