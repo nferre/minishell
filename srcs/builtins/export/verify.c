@@ -6,43 +6,31 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 10:31:18 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/10 15:26:20 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 15:39:56 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int check_export(t_token **tab)
+int check_export(t_token **tab, int i_to_exec)
 {
 	int	i;
 	char	*export;
 
-	i = 0;
+	i = -1;
 	export = "export";
-	while (export[i])
-	{
-		if (tab[0]->value[i] != export[i])
+	while (++i != 7)
+		if (tab[i_to_exec]->value[i] != export[i])
 			return (1);
-		i++;
-	}
 	return (0);
 }
 
-int	check_arg(t_token **tab)
+int	check_arg(t_token **tab, int i_to_exec)
 {
 	int	i;
 
 	i = -1;
-	while (tab[1]->value[++i])
-		if (tab[1]->value[i] == '=')
+	while (tab[i_to_exec + 1]->value[++i])
+		if (tab[i_to_exec + 1]->value[i] == '=')
 			return (0);
 	return (1);
-}
-
-int	verify(t_token **tab)
-{
-	if (check_export(tab) == 1)
-		return (1);
-	else if (check_arg(tab) == 1)
-		return (1);
-	return (0);
 }

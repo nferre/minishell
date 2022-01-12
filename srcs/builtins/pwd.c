@@ -6,12 +6,12 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:31:31 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/11 18:36:10 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:47:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	pwd(t_token **tab)
+int	pwd(t_token **tab, int i_to_exec)
 {
 	int	i;
 	char	*pwd;
@@ -19,11 +19,11 @@ int	pwd(t_token **tab)
 
 	pwd = "pwd";
 	i = 0;
-	while (tab[0]->value[i] == ' ')
+	while (tab[i_to_exec]->value[i] == ' ')
 		i++;
-	while (++i != 3)
-		if (pwd[i] != tab[0]->value[i])
+	while (++i != 4)
+		if (pwd[i] != tab[i_to_exec]->value[i])
 			return (0);
 	printf("%s\n", getcwd(cwd, sizeof(cwd)));
-	return (1);
+	return (4);
 }

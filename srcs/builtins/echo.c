@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/11 18:45:01 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/12 14:46:32 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -47,7 +47,7 @@ char	*get_str_to_print(t_token **tab, int i)
 	return (final_str);
 }
 
-int	echo(t_token **tab)
+int	echo(t_token **tab, int i_to_exec)
 {
 	char	*echo;
 	int		i;
@@ -57,23 +57,23 @@ int	echo(t_token **tab)
 	i = -1;
 	ver = 0;
 	echo = "echo";
-	while (++i != 4)
-		if (tab[0]->value[i] != echo[i])
+	while (++i != 5)
+		if (tab[i_to_exec]->value[i] != echo[i])
 			return (0);
-	if (tab[1] == NULL)
+	if (tab[i_to_exec + 1] == NULL)
 	{
 		printf("\n");
 		return (1);
 	}
-	if (check_n(tab[1]->value) == 0)
+	if (check_n(tab[i_to_exec + 1]->value) == 0)
 	{
-		to_print = get_str_to_print(tab, 1);
+		to_print = get_str_to_print(tab, i_to_exec + 1);
 		printf("%s\n", to_print);
 		free(to_print);
 		return (1);
 	}
-	if (tab[2])
-		to_print = get_str_to_print(tab, 2);
+	if (tab[i_to_exec + 2])
+		to_print = get_str_to_print(tab, i_to_exec + 2);
 	else
 		return (1);
 	printf("%s", to_print);

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 17:59:21 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/12 18:42:57 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,21 @@ typedef struct	s_data
 	int		fd_operand_pipe[2];
 }				t_data;
 
+typedef enum
+{
+	NOT_FOUND,
+	ECH0,
+	CD,
+	ENV,
+	PWD,
+	UNSET,
+	EXPORT
+}	e_return_type_builtins;
+
 t_data	g_data;
 
+int		check_arg(t_token **tab, int i_to_exec);
+int		check_export(t_token **tab, int i_to_exec);
 char	**get_arg(t_token **tab, int i_to_exec);
 char	*get_local_var(char **env, char *str);
 void	redirect_output(char *str, t_token **tab, int *ver);
@@ -50,28 +63,28 @@ t_token	**get_new_tab(t_token **tab, int *ver, int *check);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int i);
 size_t	ft_strlen(const char *s);
 char	**add_elem_env(char **env, char *data, char *data_name);
-int		verify(t_token **tab);
-int		export_var(t_token **tab, char **env);
-int		set(char *str);
+int		verify(t_token **tab, int i_to_exec);
+int		export_var(t_token **tab, char **env, int i_to_exec);
 void	rl_replace_line(const char *str, int i);
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	all_builtins(t_token **tab, char **env, char *str);
-int		echo(t_token **tab);
-int		cd(t_token **tab, char **env);
-int		pwd(t_token **tab);
+int		echo(t_token **tab, int i_to_exec);
+int		cd(t_token **tab, char **env, int i_to_exec);
+int		pwd(t_token **tab, int i_to_exec);
 void	prompt(char *str, char **env);
 void	*handler_function(int sig);
 char	**ft_split(char const *s, char c);
 void	find_exec(char **env, t_token **tab, int i_to_exec);
 void	exit_all(t_token **tab);
 void	del_elem_env(char **env, char *data_name);
-int		show_env(t_token **tab, char **env);
+int		show_env(t_token **tab, char **env, int i_to_exec);
 int		get_line_local_var(char **env, char *data_name);
-int		unset(t_token **tab, char **env);
-char	*get_name(t_token **tab);
+int		unset(t_token **tab, char **env, int i_to_exec);
+char	*get_name(t_token **tab, int i_to_exec);
 int		verify_redirect(t_token **tab);
 int		pipe_exec(t_token **tab, int i_to_exec);
+int		check_exec_builtins(t_token **tab, int i_to_exec);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
