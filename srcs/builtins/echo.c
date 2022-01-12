@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/10 18:38:27 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/11 18:45:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -47,14 +47,13 @@ char	*get_str_to_print(t_token **tab, int i)
 	return (final_str);
 }
 
-char	*echo(t_token **tab, int *j)
+int	echo(t_token **tab)
 {
 	char	*echo;
 	int		i;
 	int		ver;
 	char	*to_print;
-	char	*temp;
-	
+
 	i = -1;
 	ver = 0;
 	echo = "echo";
@@ -63,25 +62,21 @@ char	*echo(t_token **tab, int *j)
 			return (0);
 	if (tab[1] == NULL)
 	{
-		to_print = malloc(sizeof(char));
-		to_print[0] = '\0';
-		return (to_print);
+		printf("\n");
+		return (1);
 	}
 	if (check_n(tab[1]->value) == 0)
 	{
-		temp = get_str_to_print(tab, 1);
-		to_print = ft_strjoin(temp, "\n");
-		free(temp);
-		*j += 1;
-		return (to_print);
+		to_print = get_str_to_print(tab, 1);
+		printf("%s\n", to_print);
+		free(to_print);
+		return (1);
 	}
 	if (tab[2])
 		to_print = get_str_to_print(tab, 2);
 	else
-	{
-		to_print = malloc(sizeof(char));
-		to_print[0] = '\0';
-	}
-	*j += 1;
-	return (to_print);
+		return (1);
+	printf("%s", to_print);
+	free(to_print);
+	return (1);
 }

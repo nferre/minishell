@@ -6,14 +6,22 @@
 #    By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:55:02 by hadufer           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/01/10 19:17:37 by hadufer          ###   ########.fr        #
+=======
+#    Updated: 2022/01/11 18:41:22 by nferre           ###   ########.fr        #
+>>>>>>> e993b303dfefee9e6ad26c4f666d40e5d7604fec
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
+<<<<<<< HEAD
 CFLAGS = -g
+=======
+CFLAGS =
+>>>>>>> e993b303dfefee9e6ad26c4f666d40e5d7604fec
 
 SRCS = $(wildcard ./srcs/*.c) $(wildcard ./srcs/lexer_parser/*.c) $(wildcard ./srcs/builtins/*.c) $(wildcard ./srcs/utils/*.c) $(wildcard ./srcs/builtins/export/*.c)
 

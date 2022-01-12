@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/11 16:19:14 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/12 11:16:38 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ void	rl_replace_line(const char *str, int i);
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	all_builtins(t_token **tab, char **env, char *str);
-char	*echo(t_token **tab, int *i);
+int		echo(t_token **tab);
 int		cd(t_token **tab, char **env);
-char	*pwd(t_token **tab, int *i, char *to_print);
+int		pwd(t_token **tab);
 void	prompt(char *str, char **env);
 void	*handler_function(int sig);
 char	**ft_split(char const *s, char c);
 void	find_exec(char **env, t_token **tab, int i_to_exec);
 void	exit_all(t_token **tab);
 void	del_elem_env(char **env, char *data_name);
-char	*show_env(t_token **tab, char **env, int *j, char *to_print);
+int		show_env(t_token **tab, char **env);
 int		get_line_local_var(char **env, char *data_name);
-void	unset(t_token **tab, char **env, int *g);
+int		unset(t_token **tab, char **env);
 char	*get_name(t_token **tab);
 int		verify_redirect(t_token **tab);
 int		pipe_exec(t_token **tab, int i_to_exec);
