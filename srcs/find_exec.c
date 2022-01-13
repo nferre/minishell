@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 21:14:11 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/13 16:00:17 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	g_data.exec = 1;
 	g_data.term->c_lflag |= ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
-	cpy = getenv("PATH");
+	cpy = ft_getenv("PATH");
 	if (!(cpy))
 	{
 		printf("minishell: %s: No such file or directory\n", tab[i_to_exec]->value);
@@ -103,7 +103,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	}
 	arg = get_arg(tab, i_to_exec);
 	cpy = tab[i_to_exec]->value;
-	path = ft_split(getenv("PATH") , ':');
+	path = ft_split(ft_getenv("PATH") , ':');
 	while (path[++i])
 	{
 		temp2 = ft_strjoin(path[i], "/");
@@ -146,7 +146,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	g_data.term->c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
 	g_data.exec = 0;
-	g_data.last_exit_status = 1;
+	g_data.last_exit_status = 127;
 	printf("minishell: %s: command not found\n", tab[i_to_exec]->value);
 	free_all(arg, path);
 }
