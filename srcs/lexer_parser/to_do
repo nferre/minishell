@@ -1,4 +1,4 @@
 - TOKEN WHEN echo test| or test< or test<< or test>>
 - pipe> when pipe followed by nothing
 - Crash when | in tab[0] (to be fixed in pipe_exec)
-- Dont do what expected when echo < lel (caused by get_tab that skip token 2)
+- echo 'l'ad

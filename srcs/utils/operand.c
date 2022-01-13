@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 19:00:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 18:41:40 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:53:11 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,24 @@ int	get_first_operand_index(t_token **tab, int i_to_exec)
 			|| tab[i]->e_type == TOKEN_REDIRECT_OUT)
 			return (i);
 		i++;
+	}
+	return (-1);
+}
+
+int	get_previous_operand_index(t_token **tab, int i_to_exec)
+{
+	int	i;
+
+	i = 0;
+	if (i_to_exec)
+		i = i_to_exec;
+	while (tab[i] && (i > 0))
+	{
+		if (tab[i]->e_type == TOKEN_PIPE || tab[i]->e_type == TOKEN_REDIRECT_OUT_APPEND
+			|| tab[i]->e_type == TOKEN_REDIRECT_IN_HEREDOC || tab[i]->e_type == TOKEN_REDIRECT_IN
+			|| tab[i]->e_type == TOKEN_REDIRECT_OUT)
+			return (i);
+		i--;
 	}
 	return (-1);
 }

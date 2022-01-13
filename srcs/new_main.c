@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 18:47:01 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 15:34:19 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	all_builtins(t_token **tab, char **env, char *str)
 			redirect_in_exec(tab, i_to_exec);
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
+	g_data.more_than_one_operand = 0;
 	if (count_operand(tab, 0) == 0)
 	{
 		i_to_exec = 0;
@@ -135,8 +136,6 @@ t_token		**get_tab(char *str, char **env)
 	while (lexer->c)
 	{
 		token = lexer_get_next_token(lexer);
-		if (token->e_type == 2)
-			continue ;
 		destroy_token(token);
 		size_tab++;
 	}
@@ -147,9 +146,7 @@ t_token		**get_tab(char *str, char **env)
 	{
 		token = lexer_get_next_token(lexer);
 		token = expand_token(token);
-		if (token->e_type == 2)
-			continue ;
-		else if (token->e_type == 7 || token->e_type == 8)
+		if (token->e_type == 7 || token->e_type == 8)
 			token->e_type = 0;
 		tab[i] = token;
 		i++;
