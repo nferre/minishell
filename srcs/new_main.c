@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 17:47:02 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:27:35 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	all_builtins(t_token **tab, char **env)
 		 	redirect_out_append_exec(tab, i_to_exec);
 		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT)
 			redirect_out_exec(tab, i_to_exec);
-		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN_HEREDOC)
-		// 	redirect_in_heredoc_exec(tab, i_to_exec);
+		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN_HEREDOC)
+			redirect_in_heredoc_exec(tab, i_to_exec);
 		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN)
 			redirect_in_exec(tab, i_to_exec);
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
@@ -201,7 +201,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("echo test| grep test"));
+	// t_lexer *test = init_lexer(ft_strdup("echo \"l\"ad"));
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)

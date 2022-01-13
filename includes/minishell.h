@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 17:47:13 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:29:24 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int		check_exec_builtins(t_token **tab, int i_to_exec);
 int		redirect_in_exec(t_token **tab, int i_to_exec);
 void	redirect_out_exec(t_token **tab, int i_to_exec);
 void	redirect_out_append_exec(t_token **tab, int i_to_exec);
+int		redirect_in_heredoc_exec(t_token **tab, int i_to_exec);
 char	*ft_getenv(char *str);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
