@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   verify_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 15:34:08 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/13 18:44:45 by nferre           ###   ########.fr       */
+/*   Created: 2022/01/13 18:41:13 by nferre            #+#    #+#             */
+/*   Updated: 2022/01/13 18:56:52 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_getenv(char *str)
+int	verify_redirect(t_token **tab)
 {
-	char	*final_string;
-	int		line_path;
+	int	i;
 
-	line_path = get_line_local_var(g_data.env, str);
-	if (line_path == -1)
-		return (NULL);
-	final_string = ft_strdup(g_data.env[line_path] + ft_strlen(str) + 1);
-	return (final_string);
+	i = -1;
+	while (tab[++i])
+	{
+		if ((tab[i]->e_type == TOKEN_REDIRECT_OUT || tab[i]->e_type == TOKEN_REDIRECT_OUT_APPEND) && (tab[i + 1] == NULL))
+		{
+			printf("minishell: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+	}
+	return (0);
 }

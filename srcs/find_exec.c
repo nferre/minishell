@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 16:00:17 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:33:20 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	char	*cpy;
 	int		wstatus;
 	int	i;
-	int	file;
 
 	i = -1;
 	g_data.exec = 1;
@@ -101,9 +100,12 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 		free(cpy);
 		return ;
 	}
+	free(cpy);
 	arg = get_arg(tab, i_to_exec);
 	cpy = tab[i_to_exec]->value;
-	path = ft_split(ft_getenv("PATH") , ':');
+	temp = ft_getenv("PATH");
+	path = ft_split(temp , ':');
+	free(temp);
 	while (path[++i])
 	{
 		temp2 = ft_strjoin(path[i], "/");

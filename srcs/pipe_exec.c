@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 22:25:46 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 17:46:18 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:48:39 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	pipe_exec(t_token **tab, int i_to_exec)
 {
 	int	fd_pipe[2];
 	int	i;
-	int	pid_tmp[2];
 	int tmp_STDOUT;
 	int tmp_STDIN;
 

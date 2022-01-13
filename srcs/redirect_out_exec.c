@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 10:05:52 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/13 14:23:57 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:57:05 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -33,7 +33,7 @@ void	redirect_out_exec(t_token **tab, int i_to_exec)
 	{
 		g_data.create_file = 1;
 		command_to_exec = i;
-		fd = open(tab[i_to_exec + 1]->value, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU );
+		fd = open(tab[i_to_exec + 1]->value, O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
 		close(fd);
 		if (tab[i_to_exec + 2] != NULL)
 			return ;

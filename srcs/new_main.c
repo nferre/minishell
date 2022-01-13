@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 17:47:02 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:57:36 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,8 @@ void	free_tab(t_token **tab)
 void	all_builtins(t_token **tab, char **env)
 {
 	int	i;
-	t_token	**new;
-	char	*to_print;
 	int ver;
 	int	check;
-
-	int	fd_pipe[2];
 	int	i_to_exec;
 
 	check = 0;
@@ -112,7 +108,7 @@ void	all_builtins(t_token **tab, char **env)
 	}
 }
 
-t_token		**get_tab(char *str, char **env)
+t_token		**get_tab(char *str)
 {
 	//creer le tableau dans lequel tous les token sont stocke
 	t_token	*token;
@@ -158,7 +154,6 @@ gere les signaux ──────► recupere l'input ────────
                                                     creer le tableau
                      execute la commande ◄────────  de token
 */
-	char	*str_joined;
 	t_token	**tab;
 
 	g_data.term = malloc(sizeof(struct termios));
@@ -181,7 +176,12 @@ gere les signaux ──────► recupere l'input ────────
 			continue ;
 		}
 		add_history(str);
-		tab = get_tab(str, env);
+		tab = get_tab(str);
+		if (verify_redirect(tab) == 1)
+		{
+			free_tab(tab);
+			continue ;
+		}
 		all_builtins(tab, env);
 		free_tab(tab);
 		g_data.check_rm = 0;
