@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 20:06:14 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:27:40 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_data
 	int		fd_base_stdin;
 	int		fd_base_stdout;
 	int		fd_operand_pipe[2];
+	int		create_file;
 }				t_data;
 
 typedef enum
@@ -68,7 +69,7 @@ int		export_var(t_token **tab, char **env, int i_to_exec);
 void	rl_replace_line(const char *str, int i);
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
-void	all_builtins(t_token **tab, char **env, char *str);
+void	all_builtins(t_token **tab, char **env);
 int		echo(t_token **tab, int i_to_exec);
 int		cd(t_token **tab, char **env, int i_to_exec);
 int		pwd(t_token **tab, int i_to_exec);
@@ -86,6 +87,8 @@ int		verify_redirect(t_token **tab);
 int		pipe_exec(t_token **tab, int i_to_exec);
 int		check_exec_builtins(t_token **tab, int i_to_exec);
 int		redirect_in_exec(t_token **tab, int i_to_exec);
+void	redirect_out_exec(t_token **tab, int i_to_exec);
+void	redirect_out_append_exec(t_token **tab, int i_to_exec);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
