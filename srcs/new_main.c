@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 15:34:19 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:47:02 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ void	*handler_function(int sig)
 	return (NULL);
 }
 
-void	free_arg(char **arg)
-{
-	//free arg dans la fonction rm
-	int	i;
-
-	i = -1;
-	while (arg[++i])
-		free(arg[i]);
-	free(arg);
-}
-
 void	free_tab(t_token **tab)
 {
 	//free 'tab' (tableau avec tous les tokens) dans prompt et 'new' dans all_builtins
@@ -75,7 +64,7 @@ void	free_tab(t_token **tab)
 	free(tab);
 }
 
-void	all_builtins(t_token **tab, char **env, char *str)
+void	all_builtins(t_token **tab, char **env)
 {
 	int	i;
 	t_token	**new;
@@ -101,10 +90,10 @@ void	all_builtins(t_token **tab, char **env, char *str)
 	{
 		if (tab[i_to_exec]->e_type == TOKEN_PIPE)
 			pipe_exec(tab, i_to_exec);
-		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT_APPEND)
-		// 	redirect_out_append_exec(tab, i_to_exec);
-		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT)
-		// 	redirect_out_exec(tab, i_to_exec);
+		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT_APPEND)
+		 	redirect_out_append_exec(tab, i_to_exec);
+		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_OUT)
+			redirect_out_exec(tab, i_to_exec);
 		// else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN_HEREDOC)
 		// 	redirect_in_heredoc_exec(tab, i_to_exec);
 		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN)
@@ -112,6 +101,8 @@ void	all_builtins(t_token **tab, char **env, char *str)
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
 	g_data.more_than_one_operand = 0;
+	if (g_data.create_file == 1)
+		g_data.create_file = 0;
 	if (count_operand(tab, 0) == 0)
 	{
 		i_to_exec = 0;
@@ -191,7 +182,7 @@ gere les signaux ──────► recupere l'input ────────
 		}
 		add_history(str);
 		tab = get_tab(str, env);
-		all_builtins(tab, env, str);
+		all_builtins(tab, env);
 		free_tab(tab);
 		g_data.check_rm = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/12 13:55:58 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/13 16:00:17 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,51 +74,6 @@ char	**get_arg(t_token **tab, int i_to_exec)
 	return (arg);
 }
 
-void new_file(t_token **tab, char *temp, char **env, char **arg)
-{
-	//permet de creer le fichier apres redirection (ex : ls > hassanfdp, creer le fichier hassanfdp)
-	int	check;
-	int	ver;
-	int	file;
-	char	*last_name;
-	t_token **new;
-	int	i;
-
-	i = 0;
-	check = 0;
-	ver = 0;
-	new = get_new_tab(tab, &ver, &check);
-	while (check != 1)
-	{
-		if (i == 0)
-			last_name = ft_strdup(new[0]->value);
-		else
-		{
-			file = open(last_name, O_WRONLY | O_TRUNC);
-			close(file);
-		}
-		free(new);
-		new = get_new_tab(tab, &ver, &check);
-		file = open(new[0]->value, O_WRONLY | O_CREAT, S_IRWXU | O_TRUNC);
-		close(1);
-		dup2(file, 1);
-		if (check != 1)
-		{
-			if (fork() != 0)
-			{
-				wait(NULL);
-				free(last_name);
-				last_name = ft_strdup(new[0]->value);
-				i++;
-				close(file);
-				continue ;
-			}
-		}
-		free(last_name);
-		execve(temp, arg, env);
-	}
-}
-
 void	find_exec(char **env, t_token **tab, int i_to_exec)
 {
 	//cherche la commade a exectuer, si la commande n'est pas trouver cherche avec la commande de base
@@ -139,7 +94,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	g_data.exec = 1;
 	g_data.term->c_lflag |= ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
-	cpy = getenv("PATH");
+	cpy = ft_getenv("PATH");
 	if (!(cpy))
 	{
 		printf("minishell: %s: No such file or directory\n", tab[i_to_exec]->value);
@@ -148,7 +103,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	}
 	arg = get_arg(tab, i_to_exec);
 	cpy = tab[i_to_exec]->value;
-	path = ft_split(getenv("PATH") , ':');
+	path = ft_split(ft_getenv("PATH") , ':');
 	while (path[++i])
 	{
 		temp2 = ft_strjoin(path[i], "/");
@@ -191,7 +146,7 @@ void	find_exec(char **env, t_token **tab, int i_to_exec)
 	g_data.term->c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
 	g_data.exec = 0;
-	g_data.last_exit_status = 1;
+	g_data.last_exit_status = 127;
 	printf("minishell: %s: command not found\n", tab[i_to_exec]->value);
 	free_all(arg, path);
 }
