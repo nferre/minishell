@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 16:45:08 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/14 18:58:47 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	all_builtins(t_token **tab, char **env)
 		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN_HEREDOC)
 			redirect_in_heredoc_exec(tab, i_to_exec);
 		else if (tab[i_to_exec]->e_type == TOKEN_REDIRECT_IN)
-			redirect_in_exec(tab, i_to_exec);
+			if (redirect_in_exec(tab, i_to_exec) != 0)
+				break ;
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
 	g_data.more_than_one_operand = 0;
