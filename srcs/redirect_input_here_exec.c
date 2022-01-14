@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:24:02 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 19:38:44 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 17:17:08 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	redirect_in_heredoc_exec(t_token **tab, int i_to_exec)
 	tmp = NULL;
 	if (!tab[i_to_exec + 1])
 	{
-		printf("minishell: syntax error near unexpected token `newline'");
+		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	stop_word = tab[i_to_exec + 1]->value;
