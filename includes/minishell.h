@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 13:55:01 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/14 16:32:48 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,6 @@ void	redirect_stdout_pipe(void);
 int		is_last_operand(t_token **tab, int i_to_exec);
 int		is_first_operand(t_token **tab, int i_to_exec);
 int		get_previous_operand_index(t_token **tab, int i_to_exec);
+int		get_nb_pipe_operand(t_token **tab);
+void	print_in_fd(void);
 #endif
