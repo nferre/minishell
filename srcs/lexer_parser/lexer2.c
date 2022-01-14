@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:44:28 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 18:02:59 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:00:00 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_token	*lexer_collect_arg(t_lexer *lexer)
 
 	i = lexer->i;
 	j = 0;
-	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents))) && !ft_isspace(lexer->c))
+	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents))) && !ft_isspace(lexer->c) && !lexer_is_operand(lexer))
 	{
 		j++;
 		lexer_advance(lexer);

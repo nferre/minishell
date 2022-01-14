@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:29:27 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 18:10:32 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:00:32 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,12 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_REDIRECT_OUT, lexer_get_current_char_as_string(lexer), 0)));
 		else if (lexer->c == '|')
 			return (lexer_advance_with_token(lexer, init_token(TOKEN_PIPE, lexer_get_current_char_as_string(lexer), 0)));
-		else if (lexer->c == ';')
-			return (lexer_advance_with_token(lexer, init_token(TOKEN_SEMICOLON, lexer_get_current_char_as_string(lexer), 0)));
 		else if (lexer->c == '\'')
 			return (lexer_collect_quote_string(lexer));
 		else if (lexer->c == '\"')
 			return (lexer_collect_double_quote_string(lexer));
-		// else if (lexer->c == '$')
-		// 	return (lexer_advance_with_token(lexer, lexer_collect_var(lexer)));
 		else
-			return (lexer_advance_with_token(lexer, lexer_collect_arg(lexer)));
+			return (lexer_collect_arg(lexer));
 	}
 	return (NULL);
 }

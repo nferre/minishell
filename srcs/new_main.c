@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 15:40:01 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/14 16:45:08 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	all_builtins(t_token **tab, char **env)
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
 	g_data.more_than_one_operand = 0;
-	if (g_data.create_file == 1)
-		g_data.create_file = 0;
+	g_data.create_file = 0;
 	if (count_operand(tab, 0) == 0)
 	{
 		i_to_exec = 0;
@@ -201,7 +200,7 @@ int	main(int argc, char **argv, char **env)
 	str = "\0";
 	str = malloc(sizeof(char));
 	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("echo \"l\"ad"));
+	// t_lexer *test = init_lexer(ft_strdup("echo te<<st|lol"));
 	// t_token *t = lexer_get_next_token(test);
 	// t = expand_token(t);
 	// while (t)
