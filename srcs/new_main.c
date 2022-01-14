@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 15:01:05 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:03:17 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,15 +198,15 @@ int	main(int argc, char **argv, char **env)
 	init_global_data(env);
 	str = "\0";
 	str = malloc(sizeof(char));
-	// prompt(str, env);
-	t_lexer *test = init_lexer(ft_strdup("echo te<<st|lol"));
-	t_token *t = lexer_get_next_token(test);
-	t = expand_token(t);
-	while (t)
-	{
-		printf("%d : %s\n", t->e_type, t->value);
-		t = lexer_get_next_token(test);
-		t = expand_token(t);
-	}
+	prompt(str, env);
+	// t_lexer *test = init_lexer(ft_strdup("echo te<<st|lol"));
+	// t_token *t = lexer_get_next_token(test);
+	// t = expand_token(t);
+	// while (t)
+	// {
+	// 	printf("%d : %s\n", t->e_type, t->value);
+	// 	t = lexer_get_next_token(test);
+	// 	t = expand_token(t);
+	// }
 	return (0);
 }
