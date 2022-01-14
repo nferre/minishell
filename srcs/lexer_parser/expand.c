@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 17:36:00 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 17:11:19 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 14:16:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_token	*expand_token(t_token *token)
 			if (token->value[i] == '$')
 			{
 				++j;
+				if (!token->value[i + j])
+					break ;
 				if (token->value[i + j] == '?')
 					last_exit_status = 1;
 				while (token->value[i + j] && !ft_isspace(token->value[i + j]) && token->value[i + j] != '$')

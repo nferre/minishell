@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 18:27:35 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 15:01:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	all_builtins(t_token **tab, char **env)
 	int ver;
 	int	check;
 
-	int	fd_pipe[2];
 	int	i_to_exec;
 
 	check = 0;
@@ -101,8 +100,7 @@ void	all_builtins(t_token **tab, char **env)
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
 	g_data.more_than_one_operand = 0;
-	if (g_data.create_file == 1)
-		g_data.create_file = 0;
+	g_data.create_file = 0;
 	if (count_operand(tab, 0) == 0)
 	{
 		i_to_exec = 0;
@@ -200,15 +198,15 @@ int	main(int argc, char **argv, char **env)
 	init_global_data(env);
 	str = "\0";
 	str = malloc(sizeof(char));
-	prompt(str, env);
-	// t_lexer *test = init_lexer(ft_strdup("echo \"l\"ad"));
-	// t_token *t = lexer_get_next_token(test);
-	// t = expand_token(t);
-	// while (t)
-	// {
-	// 	printf("%d : %s\n", t->e_type, t->value);
-	// 	t = lexer_get_next_token(test);
-	// 	t = expand_token(t);
-	// }
+	// prompt(str, env);
+	t_lexer *test = init_lexer(ft_strdup("echo te<<st|lol"));
+	t_token *t = lexer_get_next_token(test);
+	t = expand_token(t);
+	while (t)
+	{
+		printf("%d : %s\n", t->e_type, t->value);
+		t = lexer_get_next_token(test);
+		t = expand_token(t);
+	}
 	return (0);
 }

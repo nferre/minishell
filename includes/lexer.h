@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:36:26 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/11 17:05:10 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/14 14:58:31 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ t_token	*lexer_collect_arg(t_lexer *lexer);
 char	*lexer_get_current_char_as_string(t_lexer *lexer);
 t_token	*lexer_advance_with_token(t_lexer *lexer, t_token *token);
 t_token	*lexer_collect_var(t_lexer *lexer);
+int		lexer_is_operand(t_lexer *lexer);
 #endif
