@@ -1,4 +1,3 @@
 - TOKEN WHEN echo test| or test< or test<< or test>>
 - pipe> when pipe followed by nothing
 - Crash when | in tab[0] (to be fixed in pipe_exec)
-- echo 'l'ad
