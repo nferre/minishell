@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/15 16:49:41 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:26:27 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,23 @@
 # include <errno.h>
 # include <string.h>
 
-typedef struct	s_data
+typedef struct s_data
 {
-	char	**env;
-	int		last_exit_status;
-	int		exec;
-	int		check_rm;
-	struct	termios *term;
-	int		more_than_one_operand;
-	int		fd_base_stdin;
-	int		fd_base_stdout;
-	int		fd_operand_pipe[2];
-	int		create_file;
+	char			**env;
+	int				last_exit_status;
+	int				exec;
+	int				check_rm;
+	struct termios	*term;
+	int				more_than_one_operand;
+	int				fd_base_stdin;
+	int				fd_base_stdout;
+	int				fd_operand_pipe[2];
+	int				create_file;
+	int				exec_redirect_out;
+	int				exec_redirect_append;
 }				t_data;
 
-typedef enum
+typedef enum e_return_type_builtins
 {
 	NOT_FOUND,
 	ECH0,
@@ -48,7 +50,7 @@ typedef enum
 	PWD,
 	UNSET,
 	EXPORT
-}	e_return_type_builtins;
+}	t_return_type_builtins;
 
 t_data	g_data;
 
@@ -91,6 +93,7 @@ void	redirect_out_exec(t_token **tab, int i_to_exec);
 void	redirect_out_append_exec(t_token **tab, int i_to_exec);
 int		redirect_in_heredoc_exec(t_token **tab, int i_to_exec);
 char	*ft_getenv(char *str);
+void	free_all(char **arg, char **path);
 // UTILS
 t_token	**dup_double_token_array(t_token **tab);
 char	*ft_strjoin_free(char *s1, char const *s2);
@@ -114,7 +117,12 @@ void	redirect_stdout_pipe(void);
 int		is_last_operand(t_token **tab, int i_to_exec);
 int		is_first_operand(t_token **tab, int i_to_exec);
 int		get_previous_operand_index(t_token **tab, int i_to_exec);
-int		get_nb_pipe_operand(t_token **tab);
+int		get_nb_operand(t_token **tab, int token);
 void	print_in_fd(void);
 void	free_tab(t_token **tab);
+void	free_tabb(char **tabb);
+int		last_if(t_token **tab, int i_to_exec, char **arg, char **path);
+int		init_var(int *i, char *to_print);
+void	end_find_exec(t_token **tab, int i_to_exec, char **path, char **arg);
+void	do_thing_in_fork_2(char **arg, char **path);
 #endif

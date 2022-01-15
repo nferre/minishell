@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:26:54 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 14:46:38 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 12:57:29 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -26,7 +26,7 @@ void	get_old_pwd(char **env, int *ver)
 {
 	char	cwd[PATH_MAX];
 	int		pos_old_pwd;
-	
+
 	pos_old_pwd = get_pos_in_env(env, "OLDPWD");
 	if (*ver > 0)
 		free(env[pos_old_pwd]);
@@ -39,7 +39,6 @@ void	get_new_pwd(char **env, int *ver)
 	int		pos_pwd;
 
 	pos_pwd = get_pos_in_env(env, "PWD");
-
 	if (*ver > 0)
 		free(env[pos_pwd]);
 	env[pos_pwd] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
@@ -49,7 +48,7 @@ void	get_new_pwd(char **env, int *ver)
 int	cd(t_token **tab, char **env, int i_to_exec)
 {
 	int			i;
-	char 		*cd;
+	char		*cd;
 	char		*home;
 	static int	ver;
 
@@ -67,7 +66,8 @@ int	cd(t_token **tab, char **env, int i_to_exec)
 		return (2);
 	}
 	if (chdir(tab[i_to_exec + 1]->value) == -1)
-		printf("minishell: cd: %s: %s\n", tab[i_to_exec + 1]->value, strerror(errno));
+		printf("minishell: cd: %s: %s\n",
+			tab[i_to_exec + 1]->value, strerror(errno));
 	else
 		get_new_pwd(env, &ver);
 	return (2);

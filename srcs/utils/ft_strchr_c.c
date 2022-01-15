@@ -6,14 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:19:30 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 14:57:45 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:09:15 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-// Will look for c in char *s while s[i] != d
 char	*ft_strchr_c_null(char *s, int c, int d)
 {
 	size_t	i;
