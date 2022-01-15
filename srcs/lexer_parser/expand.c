@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 17:36:00 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/15 16:10:43 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:30:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	expand_token_utils2(t_token *token, char *tab[3], int *it)
 {
 	tab[0] = ft_strndup(token->value + (it[0]) + 1, (it[1]) - 1);
 	if (!(it[2]))
+	{
 		tab[1] = get_local_var(g_data.env, tab[0]);
+		if (!tab[1])
+			tab[1] = ft_strdup("");
+	}
 	else
 	{
 		tab[1] = ft_itoa(g_data.last_exit_status);
