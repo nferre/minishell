@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:24:02 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 17:17:08 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 12:44:56 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	redirect_in_heredoc_exec(t_token **tab, int i_to_exec)
 	pipe(fd_pipe);
 	tmp_stdin = dup(STDIN_FILENO);
 	tmp_stdout = dup(STDOUT_FILENO);
-	while (!tmp || ft_strncmp(tmp, stop_word, ft_strlen_null(tmp)))
+	while (1)
 	{
 		tmp = readline(">");
-		if (!ft_strncmp(tmp, stop_word, ft_strlen_null(tmp)))
+		if (!ft_strncmp(tmp, stop_word, ft_strlen_null(stop_word)))
 			break ;
 		ft_putendl_fd(tmp, fd_pipe[1]);
 	}
