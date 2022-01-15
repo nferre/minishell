@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:17:12 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:04:39 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -21,14 +21,11 @@ void	del_elem_env(char **env, char *data_name)
 	if (line == -1)
 		return ;
 	env[line][0] = '\0';
-	//free(env[line]);
-	//env[line] = malloc(sizeof(char) * 14);
-	//env[line] = "7ca7486dfc94b";
 }
 
 char	**add_elem_env(char **env, char *data, char *data_name)
 {
-	int	i;
+	int		i;
 	char	*temp;
 
 	i = 0;

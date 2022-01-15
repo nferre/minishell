@@ -6,14 +6,14 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:31:31 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 14:47:01 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:03:28 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
 int	pwd(t_token **tab, int i_to_exec)
 {
-	int	i;
+	int		i;
 	char	*pwd;
 	char	cwd[PATH_MAX];
 

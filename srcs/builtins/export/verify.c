@@ -6,14 +6,14 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 10:31:18 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 15:39:56 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:05:05 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int check_export(t_token **tab, int i_to_exec)
+int	check_export(t_token **tab, int i_to_exec)
 {
-	int	i;
+	int		i;
 	char	*export;
 
 	i = -1;

@@ -6,14 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:12:14 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 17:28:47 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:07:04 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-// Insert needle string into at the index k of haystack and return the result
 char	*ft_insert_string(char *haystack, char *needle, int k)
 {
 	int		i;

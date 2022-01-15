@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/13 15:00:33 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:01:26 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -47,6 +47,14 @@ char	*get_str_to_print(t_token **tab, int i)
 	return (final_str);
 }
 
+int	print_str(t_token **tab, int i_to_exec, char *to_print)
+{
+	to_print = get_str_to_print(tab, i_to_exec + 1);
+	printf("%s\n", to_print);
+	free(to_print);
+	return (1);
+}
+
 int	echo(t_token **tab, int i_to_exec)
 {
 	char	*echo;
@@ -66,12 +74,7 @@ int	echo(t_token **tab, int i_to_exec)
 		return (1);
 	}
 	if (check_n(tab[i_to_exec + 1]->value) == 0)
-	{
-		to_print = get_str_to_print(tab, i_to_exec + 1);
-		printf("%s\n", to_print);
-		free(to_print);
-		return (1);
-	}
+		return (print_str(tab, i_to_exec, to_print));
 	if (tab[i_to_exec + 2])
 		to_print = get_str_to_print(tab, i_to_exec + 2);
 	else

@@ -6,12 +6,18 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 13:50:44 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/05 22:44:14 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 17:17:11 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+
+void	init(char *ret, int i, char *tmp)
+{
+	free(tmp);
+	ret[i] = 0;
+}
 
 char	*ft_strjoin_free(char *s1, char const *s2)
 {
@@ -38,7 +44,6 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 		i++;
 		s2++;
 	}
-	free(tmp);
-	ret[i] = 0;
+	init(ret, i, tmp);
 	return (ret);
 }

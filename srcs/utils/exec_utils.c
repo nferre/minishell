@@ -6,15 +6,12 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:13:09 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 16:31:16 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:06:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Put more_than_one_operand to 1 and init fd_operand_pipe fd_base_stdin fd_base_stdout
-// and redirect stdin, stdout to fd_operand_pipe
-// in the case where there's more than 1 operand
 void	stdout_stdin_pipe(void)
 {
 	g_data.more_than_one_operand = 1;

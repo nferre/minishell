@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:49:49 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 18:58:47 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 11:03:30 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	all_builtins(t_token **tab, char **env)
 				break ;
 		i_to_exec = get_first_operand_index(tab, i_to_exec + 1);
 	}
+	if (g_data.more_than_one_operand == 1)
+		redirect_stdout_stdin_pipe();
 	g_data.more_than_one_operand = 0;
 	g_data.create_file = 0;
 	if (count_operand(tab, 0) == 0)

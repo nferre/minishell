@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:24 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/13 18:33:20 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 16:17:01 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 char	*get_command(char *str)
 {
-	//je sais pas a quoi ca sert lol
 	char	*temp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (str[i] == ' ')
@@ -32,7 +31,6 @@ char	*get_command(char *str)
 
 void	free_all(char **arg, char **path)
 {
-	//free arg et path rien de special
 	int	i;
 
 	i = -1;
@@ -47,7 +45,6 @@ void	free_all(char **arg, char **path)
 
 char	**get_arg(t_token **tab, int i_to_exec)
 {
-	//permet de creer un double array qui va etre passer a execve, ce qui va permettre de de connaitre et d'exectuer les options d'une commande (ex : ls -l, permet de passer le -l pour execve)
 	int		i;
 	int		tab_i;
 	char	**arg;
@@ -62,9 +59,10 @@ char	**get_arg(t_token **tab, int i_to_exec)
 	arg = malloc(sizeof(char *) * ((i - i_to_exec) + 1));
 	i = 0;
 	tab_i = i + i_to_exec;
-	while(tab[tab_i])
+	while (tab[tab_i])
 	{
-		if (tab[tab_i]->e_type != 0 && tab[tab_i]->e_type != 7 && tab[tab_i]->e_type != 8)
+		if (tab[tab_i]->e_type != 0
+			&& tab[tab_i]->e_type != 7 && tab[tab_i]->e_type != 8)
 			break ;
 		arg[i] = ft_strdup(tab[tab_i]->value);
 		i++;
@@ -74,81 +72,48 @@ char	**get_arg(t_token **tab, int i_to_exec)
 	return (arg);
 }
 
-void	find_exec(char **env, t_token **tab, int i_to_exec)
+void	do_thing_in_fork(char *temp, char *temp2, char **arg, char **path)
 {
-	//cherche la commade a exectuer, si la commande n'est pas trouver cherche avec la commande de base
-	//exemple : input = /bin/ls
-	//cherche d'abord dans le PATH (example /sbin/bin/ls, puis /usr/local/bin/bin/ls)
-	//si non essaie d'exectuer l'input directement, dans ce cas : /bin/ls -> execute donc la commande
-	//si rien n'est trouver, affiche erreur commande not found
-	char	**path;
-	char	**arg;
-	char	*temp;
-	char	*temp2;
-	char	*cpy;
-	int		wstatus;
-	int	i;
+	int	wstatus;
 
-	i = -1;
-	g_data.exec = 1;
-	g_data.term->c_lflag |= ECHOCTL;
-	tcsetattr(0, TCSANOW, g_data.term);
-	cpy = ft_getenv("PATH");
-	if (!(cpy))
-	{
-		printf("minishell: %s: No such file or directory\n", tab[i_to_exec]->value);
-		free(cpy);
-		return ;
-	}
-	free(cpy);
-	arg = get_arg(tab, i_to_exec);
-	cpy = tab[i_to_exec]->value;
-	temp = ft_getenv("PATH");
-	path = ft_split(temp , ':');
-	free(temp);
-	while (path[++i])
-	{
-		temp2 = ft_strjoin(path[i], "/");
-		temp = ft_strjoin(temp2 , cpy);
-		if (access(temp, X_OK) != -1)
-		{
-			if (fork() != 0)
-			{
-				wait(&wstatus);
-				g_data.exec = 0;
-				g_data.term->c_lflag &= ~ECHOCTL;
-				tcsetattr(0, TCSANOW, g_data.term);
-				if (WIFEXITED(wstatus))
-					g_data.last_exit_status = WEXITSTATUS(wstatus);
-				free(temp);
-				free(temp2);
-				free_all(arg, path);
-				return ;
-			}
-			execve(temp, arg, env);
-		}
-		free(temp);
-		free(temp2);
-	}
-	if (access(tab[i_to_exec]->value, X_OK) != -1)
-	{
-		if(fork() != 0)
-		{
-			wait(&wstatus);
-			g_data.exec = 0;
-			g_data.term->c_lflag &= ~ECHOCTL;
-			tcsetattr(0, TCSANOW, g_data.term);
-			if (WIFEXITED(wstatus))
-				g_data.last_exit_status = WEXITSTATUS(wstatus);	
-			free_all(arg, path);
-			return ;
-		}
-		execve(tab[i_to_exec]->value, arg, env);
-	}
+	wait(&wstatus);
+	g_data.exec = 0;
 	g_data.term->c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, g_data.term);
-	g_data.exec = 0;
-	g_data.last_exit_status = 127;
-	printf("minishell: %s: command not found\n", tab[i_to_exec]->value);
+	if (WIFEXITED(wstatus))
+		g_data.last_exit_status = WEXITSTATUS(wstatus);
+	if (temp)
+		free(temp);
+	if (temp2)
+		free(temp2);
 	free_all(arg, path);
+}
+
+void	find_exec(char **env, t_token **tab, int i_to_exec)
+{
+	char	**path;
+	char	**arg;
+	char	*tabb[3];
+	int		i;
+
+	if (init_var(&i, tab[i_to_exec]->value) == 1)
+		return ;
+	arg = get_arg(tab, i_to_exec);
+	tabb[2] = tab[i_to_exec]->value;
+	tabb[0] = ft_getenv("PATH");
+	path = ft_split(tabb[0], ':');
+	free(tabb[0]);
+	while (path[++i])
+	{
+		tabb[1] = ft_strjoin(path[i], "/");
+		tabb[0] = ft_strjoin(tabb[1], tabb[2]);
+		if (access(tabb[0], X_OK) != -1)
+		{
+			if (fork() != 0)
+				return (do_thing_in_fork(tabb[0], tabb[1], arg, path));
+			execve(tabb[0], arg, env);
+		}
+		free_tabb(tabb);
+	}
+	last_if(tab, i_to_exec, arg, path);
 }

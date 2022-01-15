@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 10:13:39 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 15:38:11 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:04:13 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -14,7 +14,7 @@
 char	*nb_to_malloc(char *str, int i, char c)
 {
 	char	*malloc_me;
-	int	j;
+	int		j;
 
 	j = 0;
 	while (ft_isspace(str[i]) == 0 && str[i] && str[i] != c)
@@ -29,8 +29,8 @@ char	*nb_to_malloc(char *str, int i, char c)
 char	*get_name(t_token **tab, int i_to_exec)
 {
 	char	*data_name;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	j = 0;
 	i = 0;
@@ -43,8 +43,8 @@ char	*get_name(t_token **tab, int i_to_exec)
 
 char	*get_var(t_token **tab, int i_to_exec)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*data;
 
 	j = 0;

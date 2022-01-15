@@ -6,23 +6,23 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:32:05 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/14 17:55:04 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/14 18:29:23 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_nb_pipe_operand(t_token **tab)
+int	get_nb_operand(t_token **tab, int token)
 {
 	int	i;
-	int	nb_pipe;
+	int	nb_token;
 
 	i = -1;
-	nb_pipe = 0;
+	nb_token = 0;
 	while (tab[++i])
-		if (tab[i]->e_type == TOKEN_PIPE)
-			nb_pipe++;
-	return (nb_pipe);
+		if (tab[i]->e_type == token)
+			nb_token++;
+	return (nb_token);
 }
 
 void	print_in_fd(void)

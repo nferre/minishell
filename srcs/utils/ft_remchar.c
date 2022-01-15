@@ -6,16 +6,13 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:21:35 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 15:24:35 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:07:43 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-// ft_remchar delete the character at the index i
-// and send back a string without it
-// if an error occur return NULL
 char	*ft_remchar(char *str, int i)
 {
 	char	*str_1;
