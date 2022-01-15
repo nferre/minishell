@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:32:05 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/14 18:29:23 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 17:59:08 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_nb_operand(t_token **tab, int token)
 	i = -1;
 	nb_token = 0;
 	while (tab[++i])
-		if (tab[i]->e_type == token)
+		if ((int)tab[i]->e_type == token)
 			nb_token++;
 	return (nb_token);
 }

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:24:26 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/15 17:10:04 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 17:59:09 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ffirst_ifs(int *i, t_token **tab, int i_to_exec, int *command_to_exec)
 int	gget_stdout(int *tmp_stdout, t_token **tab)
 {
 	if (get_nb_operand(tab, TOKEN_PIPE) == 0
-		&& get_nb_operand(tab, TOKEN_REDIRECT_OUT) == 1)
+		&& get_nb_operand(tab, TOKEN_REDIRECT_OUT_APPEND) == 1)
 		*tmp_stdout = dup(STDOUT_FILENO);
 	return (0);
 }
@@ -77,7 +77,7 @@ void	redirect_out_append_exec(t_token **tab, int i_to_exec)
 	if (count_operand(tab, 0) > 1 && is_last_operand(tab, i_to_exec))
 		redirect_stdout_stdin_pipe();
 	else if (get_nb_operand(tab, TOKEN_PIPE) == 0
-		&& get_nb_operand(tab, TOKEN_REDIRECT_OUT) == 1)
+		&& get_nb_operand(tab, TOKEN_REDIRECT_OUT_APPEND) == 1)
 	{
 		dup2(tmp_stdout, STDOUT_FILENO);
 		close(tmp_stdout);

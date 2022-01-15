@@ -6,7 +6,7 @@
 /*   By: nferre <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 13:01:37 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/15 13:01:26 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 17:39:10 by nferre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -55,6 +55,12 @@ int	print_str(t_token **tab, int i_to_exec, char *to_print)
 	return (1);
 }
 
+void	init_variable(int *i, int *ver)
+{
+	*ver = 0;
+	*i = -1;
+}
+
 int	echo(t_token **tab, int i_to_exec)
 {
 	char	*echo;
@@ -62,8 +68,8 @@ int	echo(t_token **tab, int i_to_exec)
 	int		ver;
 	char	*to_print;
 
-	i = -1;
-	ver = 0;
+	init_variable(&i, &ver);
+	to_print = NULL;
 	echo = "echo";
 	while (++i != 5)
 		if (tab[i_to_exec]->value[i] != echo[i])
