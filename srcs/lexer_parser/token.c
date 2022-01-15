@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 17:33:30 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/07 17:00:47 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 15:11:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ t_token	*init_token(int type, char *value, int expanded)
 
 void	destroy_token(t_token *token)
 {
-	free(token->value);
-	free(token);
+	if (token)
+	{
+		free(token->value);
+		free(token);
+	}
 }

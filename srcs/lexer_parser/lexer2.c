@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:44:28 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 15:00:00 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 16:09:05 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,148 +14,98 @@
 #include "libft.h"
 #include "lexer.h"
 
-t_token	*lexer_collect_quote_string(t_lexer *lexer)
+t_token	*lexer_collect_arg_util(t_lexer *lexer, char **tab, int *it)
 {
-	char	*value;
-	int		j;
-	int		i;
-	int		reset_i;
+	t_token	*tok;
+	t_lexer	*t;
 
-	reset_i = lexer->i;
-	lexer_advance(lexer);
-	j = 0;
-	i = lexer->i;
-	while ((lexer->c && lexer->i < ft_strlen(lexer->contents)) && (lexer->c != '\''))
-	{
-		j++;
-		lexer_advance(lexer);
-	}
-	if (lexer->i == ft_strlen(lexer->contents))
-	{
-		lexer->i = reset_i;
-		lexer->c = lexer->contents[reset_i];
-		return (lexer_collect_arg(lexer));
-	}
-	lexer_advance(lexer);
-	value = ft_strndup(lexer->contents + i, j);
-	return (init_token(TOKEN_QUOTE_STRING, value, 0));
+	t = init_lexer(lexer->contents);
+	tok = NULL;
+	(t)->i = it[2] + it[0];
+	(t)->c = (t)->contents[(t)->i];
+	tok = lexer_collect_double_quote_string((t));
+	tok = expand_token(tok);
+	tab[1] = ft_remstring(tab[0], tab[2] - tab[0], tab[3] - tab[0] + 1);
+	free(tab[0]);
+	tab[0] = tab[1];
+	tab[0] = ft_strjoin_free_null(tab[0], tok->value);
+	destroy_token(tok);
+	free((t));
+	return (init_token(TOKEN_ARG, tab[0], 1));
 }
 
-t_token	*lexer_collect_double_quote_string(t_lexer *lexer)
+t_token	*lexer_collect_arg_util2(t_lexer *lexer, char **tab, int *it)
 {
-	char	*value;
-	int		j;
-	int		i;
-	int		reset_i;
+	t_token	*tok;
+	t_lexer	*t;
 
-	reset_i = lexer->i;
-	lexer_advance(lexer);
-	j = 0;
-	i = lexer->i;
-	while ((lexer->c && lexer->i < ft_strlen(lexer->contents)) && (lexer->c != '\"'))
+	t = init_lexer(lexer->contents);
+	tok = NULL;
+	(t)->i = it[2] + it[0];
+	(t)->c = (t)->contents[(t)->i];
+	tok = lexer_collect_quote_string((t));
+	tab[1] = ft_remstring(tab[0], tab[2] - tab[0], tab[3] - tab[0] + 1);
+	free(tab[0]);
+	tab[0] = tab[1];
+	tab[0] = ft_strjoin_free_null(tab[0], tok->value);
+	return (init_token(TOKEN_ARG, tab[0], 1));
+}
+
+void	lexer_collect_arg_util_begin(t_lexer *lexer, char **tab, int *it)
+{
+	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents)))
+		&& !ft_isspace(lexer->c) && !lexer_is_operand(lexer))
 	{
-		j++;
+		it[1]++;
 		lexer_advance(lexer);
 	}
-	if (lexer->i == ft_strlen(lexer->contents))
+	tab[0] = ft_strndup((lexer->contents + it[0]), it[1]);
+	tab[2] = ft_strchr(tab[0], '\"');
+}
+
+t_token	*lexer_collect_quote_arg(t_lexer *lexer, char **tab, int *it)
+{
+	tab[2] = ft_strchr(tab[0], '\'');
+	it[2] = tab[2] - tab[0];
+	if (tab[2])
 	{
-		lexer->i = reset_i;
-		lexer->c = lexer->contents[reset_i];
-		return (lexer_collect_arg(lexer));
+		tab[3] = ft_strchr(tab[2] + 1, '\'');
+		if (tab[0] != tab[2] && tab[0] != tab[2] && *(tab[2] - 1) == '$')
+		{
+			tab[1] = ft_remchar(tab[0], it[2] - 1);
+			free(tab[0]);
+			tab[0] = tab[1];
+		}
+		if (tab[3])
+			return (lexer_collect_arg_util2(lexer, tab, it));
 	}
-	lexer_advance(lexer);
-	value = ft_strndup(lexer->contents + i, j);
-	return (init_token(TOKEN_DOUBLE_QUOTE_STRING, value, 0));
+	return (NULL);
 }
 
 t_token	*lexer_collect_arg(t_lexer *lexer)
 {
-	char	*value;
-	char	*tmp_value;
-	char	*tmp;
-	char	*tmp2;
-	t_token	*tok;
-	t_lexer	*tmp_lexer;
-	int		i;
-	int		j;
-	int		tmp_minus_value;
+	char		*tab[4];
+	const int	it[3] = {lexer->i, 0};
+	t_token		*tok;
 
-	i = lexer->i;
-	j = 0;
-	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents))) && !ft_isspace(lexer->c) && !lexer_is_operand(lexer))
+	if (!lexer->c)
+		return (NULL);
+	lexer_collect_arg_util_begin(lexer, tab, (int *)it);
+	((int *)it)[2] = tab[2] - tab[0];
+	if (tab[2])
 	{
-		j++;
-		lexer_advance(lexer);
-	}
-	value = ft_strndup((lexer->contents + i), j);
-	tmp = ft_strchr(value, '\"');
-	tmp_minus_value = tmp - value;
-	if (tmp)
-	{
-		tmp2 = ft_strchr(tmp + 1, '\"');
-		if (value != tmp && value != tmp && *(tmp - 1) == '$')
+		tab[3] = ft_strchr(tab[2] + 1, '\"');
+		if (tab[0] != tab[2] && tab[0] != tab[2] && *(tab[2] - 1) == '$')
 		{
-			tmp_value = ft_remchar(value, tmp_minus_value - 1);
-			free(value);
-			value = tmp_value;
+			tab[1] = ft_remchar(tab[0], it[2] - 1);
+			free(tab[0]);
+			tab[0] = tab[1];
 		}
-		if (tmp2)
-		{
-			tmp_lexer = init_lexer(lexer->contents);
-			tmp_lexer->i = tmp_minus_value + i;
-			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
-			tok = lexer_collect_double_quote_string(tmp_lexer);
-			tok = expand_token(tok);
-			tmp_value = ft_remstring(value, tmp - value, tmp2 - value + 1);
-			free(value);
-			value = tmp_value;
-			value = ft_strjoin_free_null(value, tok->value);
-			destroy_token(tok);
-			free(tmp_lexer);
-			return (init_token(TOKEN_ARG, value, 1));
-		}
+		if (tab[3])
+			return (lexer_collect_arg_util(lexer, tab, (int *)it));
 	}
-	tmp = ft_strchr(value, '\'');
-	tmp_minus_value = tmp - value;
-	if (tmp)
-	{
-		tmp2 = ft_strchr(tmp + 1, '\'');
-		if (value != tmp && value != tmp && *(tmp - 1) == '$')
-		{
-			tmp_value = ft_remchar(value, tmp_minus_value - 1);
-			free(value);
-			value = tmp_value;
-		}
-		if (tmp2)
-		{
-			tmp_lexer = init_lexer(lexer->contents);
-			tmp_lexer->i = tmp_minus_value + i;
-			tmp_lexer->c = tmp_lexer->contents[tmp_lexer->i];
-			tok = lexer_collect_quote_string(tmp_lexer);
-			tmp_value = ft_remstring(value, tmp - value, tmp2 - value + 1);
-			free(value);
-			value = tmp_value;
-			value = ft_strjoin_free_null(value, tok->value);
-			return (init_token(TOKEN_ARG, value, 1));
-		}
-	}
-	return (init_token(TOKEN_ARG, value, 0));
-}
-
-t_token	*lexer_collect_var(t_lexer *lexer)
-{
-	char	*value;
-	int		i;
-	int		j;
-
-	// lexer_advance(lexer);
-	i = lexer->i;
-	j = 0;
-	while ((lexer->c && (lexer->i < ft_strlen(lexer->contents))) && !ft_isspace(lexer->c))
-	{
-		j++;
-		lexer_advance(lexer);
-	}
-	value = ft_strndup((lexer->contents + i), j);
-	return (init_token(TOKEN_ENV_VAR, value, 0));
+	tok = lexer_collect_quote_arg(lexer, tab, (int *)it);
+	if (tok)
+		return (tok);
+	return (init_token(TOKEN_ARG, tab[0], 0));
 }

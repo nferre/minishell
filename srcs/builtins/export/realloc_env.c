@@ -6,15 +6,15 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:04:29 by nferre            #+#    #+#             */
-/*   Updated: 2022/01/12 13:17:12 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 13:51:17 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
 #include "libft.h"
+#include "minishell.h"
 
 void	del_elem_env(char **env, char *data_name)
 {
-	char	*temp;
 	int		line;
 
 	line = get_line_local_var(env, data_name);

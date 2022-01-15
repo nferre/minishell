@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:55:45 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/14 17:30:22 by nferre           ###   ########.fr       */
+/*   Updated: 2022/01/15 16:49:41 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		ft_isspace(int c);
 char	*ft_strndup(char *str, int n);
 size_t	ft_strlen_null(char *s);
 char	*ft_strjoin_null(char *s1, char *s2);
-char	*ft_remchar(char *str, int i);
+char	*ft_remchar(char *str, size_t i);
 char	*ft_remstring(char *str, int i, int j);
 char	*ft_insert_string(char *haystack, char *needle, int k);
 void	init_global_data(char **env);
@@ -116,4 +116,5 @@ int		is_first_operand(t_token **tab, int i_to_exec);
 int		get_previous_operand_index(t_token **tab, int i_to_exec);
 int		get_nb_pipe_operand(t_token **tab);
 void	print_in_fd(void);
+void	free_tab(t_token **tab);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hadufer <hadufer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:21:35 by hadufer           #+#    #+#             */
-/*   Updated: 2022/01/05 15:24:35 by hadufer          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:50:42 by hadufer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // ft_remchar delete the character at the index i
 // and send back a string without it
 // if an error occur return NULL
-char	*ft_remchar(char *str, int i)
+char	*ft_remchar(char *str, size_t i)
 {
 	char	*str_1;
 	char	*str_2;
